@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/UncookTheBook.iml" filepath="$PROJECT_DIR$/UncookTheBook.iml" group="UncookTheBook" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="UncookTheBook/app" />
+    </modules>
+  </component>
+</project>
