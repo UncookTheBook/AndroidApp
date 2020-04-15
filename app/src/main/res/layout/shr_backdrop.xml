@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leaderboard_label"
+        android:layout_gravity="left"
+        android:drawableLeft="@drawable/ic_leaderboard"
+        android:drawableTint="@color/toolbarIconColor"
+        tools:ignore="RtlHardcoded" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="?android:attr/textColorPrimary" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/article_report_label"
+        android:layout_gravity="left"
+        android:drawableLeft="@drawable/ic_news"
+        android:drawableTint="@color/toolbarIconColor"
+        tools:ignore="RtlHardcoded" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="?android:attr/textColorPrimary" />
+
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
+        android:drawableTint="@color/toolbarIconColor"
+        android:text="@string/logout_label"
+        android:layout_gravity="left"
+        tools:ignore="RtlHardcoded" />
+
+</merge>
