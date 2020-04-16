@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/shr_app_name"
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Shrine">
+        android:theme="@style/AppTheme">
         <activity android:name="com.uncookthebook.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

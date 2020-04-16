@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uncookthebook.app.ProductGridFragment">
+    tools:context="com.uncookthebook.app.ReportArticleFragment">
 
     <LinearLayout
-        style="@style/Widget.Shrine.Backdrop"
+        style="@style/Widget.AppTheme.Backdrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
@@ -17,7 +17,7 @@
         android:paddingTop="70dp"
         tools:ignore="RtlHardcoded">
 
-        <include layout="@layout/shr_backdrop" />
+        <include layout="@layout/toolbar_backdrop" />
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -27,7 +27,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/app_bar"
-            style="@style/Widget.Shrine.Toolbar"
+            style="@style/Widget.AppTheme.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:paddingStart="12dp"
@@ -35,8 +35,8 @@
             android:paddingEnd="12dp"
             android:paddingRight="12dp"
             app:contentInsetStart="0dp"
-            app:navigationIcon="@drawable/shr_menu"
-            app:title="@string/shr_app_name" />
+            app:navigationIcon="@drawable/ic_menu"
+            app:title="@string/app_name" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

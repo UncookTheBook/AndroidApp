@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="48dp"
             android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/shr_logo"
+            app:srcCompat="@drawable/logo"
             android:contentDescription="@string/logo_accesibility" />
 
         <TextView
@@ -30,17 +30,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="132dp"
-            android:text="@string/shr_app_name"
+            android:text="@string/app_name"
             android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.Shrine.Title"
+            android:textAppearance="@style/TextAppearance.AppTheme.Title"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            style="@style/Widget.Shrine.TextInputLayout"
-            android:hint="@string/shr_hint_username">
+            style="@style/Widget.AppTheme.TextInputLayout"
+            android:hint="@string/hint_username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -54,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="@string/shr_hint_password"
-            style="@style/Widget.Shrine.TextInputLayout"
+            android:hint="@string/hint_password"
+            style="@style/Widget.AppTheme.TextInputLayout"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,20 +74,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/next_button"
-                style="@style/Widget.Shrine.Button"
+                style="@style/Widget.AppTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="@string/shr_button_next" />
+                android:text="@string/button_next" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
-                style="@style/Widget.Shrine.Button.TextButton"
+                style="@style/Widget.AppTheme.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_toStartOf="@id/next_button"
-                android:text="@string/shr_button_cancel" />
+                android:text="@string/button_cancel" />
 
         </RelativeLayout>
     </LinearLayout>

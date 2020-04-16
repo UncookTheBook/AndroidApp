@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Shrine.Button.TextButton"
+        style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/leaderboard_label"
@@ -19,7 +19,7 @@
         android:background="?android:attr/textColorPrimary" />
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Shrine.Button.TextButton"
+        style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/article_report_label"
@@ -36,7 +36,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Shrine.Button.TextButton"
+        style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
