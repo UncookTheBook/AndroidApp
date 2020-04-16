@@ -23,7 +23,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.shr_login_fragment, container, false);
+        View view = inflater.inflate(R.layout.login_fragment, container, false);
         final TextInputLayout passwordTextInput = view.findViewById(R.id.password_text_input);
         final TextInputEditText passwordEditText = view.findViewById(R.id.password_edit_text);
         MaterialButton nextButton = view.findViewById(R.id.next_button);
@@ -33,10 +33,10 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!isPasswordValid(passwordEditText.getText())) {
-                    passwordTextInput.setError(getString(R.string.shr_error_password));
+                    passwordTextInput.setError(getString(R.string.error_password));
                 } else {
                     passwordTextInput.setError(null); // Clear the error
-                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false);
+                    ((NavigationHost) getActivity()).navigateTo(new ReportArticleFragment(), false);
                 }
             }
         });

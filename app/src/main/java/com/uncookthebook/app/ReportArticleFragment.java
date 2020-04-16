@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 
 
-public class ProductGridFragment extends Fragment {
+public class ReportArticleFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,13 @@ public class ProductGridFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
-        View view = inflater.inflate(R.layout.shr_product_grid_fragment, container, false);
+        View view = inflater.inflate(R.layout.report_article_fragment, container, false);
 
         // Set up the toolbar
         setUpToolbar(view);
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.shr_product_grid_background_shape);
+            view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.background_shape);
         }
         return view;
     }
@@ -50,8 +50,8 @@ public class ProductGridFragment extends Fragment {
                     context,
                     view.findViewById(R.id.product_grid),
                     new AccelerateDecelerateInterpolator(),
-                    context.getResources().getDrawable(R.drawable.shr_menu), // Menu open icon
-                    context.getResources().getDrawable(R.drawable.shr_close_menu)));
+                    context.getResources().getDrawable(R.drawable.ic_menu), // Menu open icon
+                    context.getResources().getDrawable(R.drawable.ic_close_menu)));
         }
     }
 }

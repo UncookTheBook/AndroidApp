@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
  */
 public class NavigationIconClickListener implements View.OnClickListener {
 
+    private static final float DROPDOWN_HEIGHT_MULTIPLIER = 1.4f;
     private final AnimatorSet animatorSet = new AnimatorSet();
     private Context context;
     private View sheet;
@@ -60,8 +61,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
 
         updateIcon(view);
 
-        final int translateY = height -
-                context.getResources().getDimensionPixelSize(R.dimen.shr_product_grid_reveal_height);
+        final int translateY = (int) (height - height / DROPDOWN_HEIGHT_MULTIPLIER);
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(sheet, "translationY", backdropShown ? translateY : 0);
         animator.setDuration(500);
