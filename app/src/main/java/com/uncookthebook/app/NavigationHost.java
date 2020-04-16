@@ -1,4 +1,4 @@
-package com.google.codelabs.mdc.java.shrine;
+package com.uncookthebook.app;
 
 import androidx.fragment.app.Fragment;
 

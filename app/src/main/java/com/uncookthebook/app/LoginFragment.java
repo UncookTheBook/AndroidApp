@@ -1,11 +1,11 @@
-package com.google.codelabs.mdc.java.shrine;
+package com.uncookthebook.app;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -42,14 +42,11 @@ public class LoginFragment extends Fragment {
         });
 
         // Clear the error once more than 8 characters are typed.
-        passwordEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (isPasswordValid(passwordEditText.getText())) {
-                    passwordTextInput.setError(null); //Clear the error
-                }
-                return false;
+        passwordEditText.setOnKeyListener((view1, i, keyEvent) -> {
+            if (isPasswordValid(passwordEditText.getText())) {
+                passwordTextInput.setError(null); //Clear the error
             }
+            return false;
         });
 
         return view;

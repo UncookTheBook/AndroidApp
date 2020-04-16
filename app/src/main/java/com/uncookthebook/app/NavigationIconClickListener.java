@@ -1,4 +1,4 @@
-package com.google.codelabs.mdc.java.shrine;
+package com.uncookthebook.app;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import androidx.annotation.Nullable;
+
 
 /**
  * {@link android.view.View.OnClickListener} used to translate the product grid sheet downward on
