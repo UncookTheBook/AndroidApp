@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity {
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         if(account != null) {
             //user is already signed in
             Log.d("GoogleSignIn", "User is already logged");
-            //move to
+            setGoogleAccount(account);
             this.navigateTo(new ReportArticleFragment(), false);
         }
     }
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
 
     private void setupLogin(){
         final GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_id))
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
@@ -73,5 +75,16 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public GoogleSignInClient getGoogleClient() {
         return mGoogleSignInClient;
+    }
+
+    @Override
+    public GoogleSignInAccount getGoogleAccount() {
+        return userAccount;
+    }
+
+    //after the login page userAccount must not be null
+    @Override
+    public void setGoogleAccount(GoogleSignInAccount account) {
+        userAccount = account;
     }
 }

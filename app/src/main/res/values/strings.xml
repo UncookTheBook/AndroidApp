@@ -14,5 +14,9 @@
         In order to guarantee that our users are not robots and to store achievements you will obtain,
         we require you to login with your Google account. \n \n Press the button below to continue
     </string>
-
+    <string name="server_id">
+        234949874727-7pbe1gebujhcicmo1c0i35o948fe7oqa.apps.googleusercontent.com
+    </string>
+    <string name="login_failed">Sorry, we couldn\'t log you in. Please try again</string>
+    <string name="welcome">Welcome,  %1$s</string>
 </resources>

@@ -3,6 +3,7 @@ package com.uncookthebook.app;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
 
 
 public class ReportArticleFragment extends Fragment {
@@ -31,6 +33,7 @@ public class ReportArticleFragment extends Fragment {
 
         // Set up the toolbar
         setUpToolbar(view);
+        showUserName(view);
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.product_grid).setBackgroundResource(R.drawable.background_shape);
@@ -53,5 +56,14 @@ public class ReportArticleFragment extends Fragment {
                     context.getResources().getDrawable(R.drawable.ic_menu), // Menu open icon
                     context.getResources().getDrawable(R.drawable.ic_close_menu)));
         }
+    }
+
+    private void showUserName(View view) {
+        Toolbar topBar = view.findViewById(R.id.app_bar);
+        topBar.setTitle(String.format(getString(R.string.welcome), getUserName()));
+    }
+
+    private String getUserName(){
+        return ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount().getGivenName();
     }
 }
