@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Activity mainActivity = Objects.requireNonNull(getActivity());
             ((GoogleActivity) mainActivity).setGoogleAccount(account);
-            ((NavigationHost) mainActivity).navigateTo(new ReportArticleFragment(), false);
+            ((NavigationHost) mainActivity).navigateTo(new PasteArticleFragment(), false);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
