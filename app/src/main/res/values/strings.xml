@@ -2,7 +2,6 @@
     <string name="app_name">Uncook the book</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
-    <string name="button_next">Next</string>
     <string name="button_cancel">Cancel</string>
     <string name="error_password">Password must contain at least 8 characters.</string>
     <string name="product_title">Title</string>
@@ -10,6 +9,14 @@
     <string name="leaderboard_label">Leaderboard</string>
     <string name="logout_label">Logout</string>
     <string name="article_report_label">Article report</string>
-    <string name="logo_accesibility">The app logo</string>
-
+    <string name="logo_accessibility">The app logo</string>
+    <string name="login_explanation">
+        In order to guarantee that our users are not robots and to store achievements you will obtain,
+        we require you to login with your Google account. \n \n Press the button below to continue
+    </string>
+    <string name="server_id">
+        234949874727-7pbe1gebujhcicmo1c0i35o948fe7oqa.apps.googleusercontent.com
+    </string>
+    <string name="login_failed">Sorry, we couldn\'t log you in. Please try again</string>
+    <string name="welcome">Welcome,  %1$s</string>
 </resources>
