@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
             //user is already signed in
             Log.d("GoogleSignIn", "User is already logged");
             setGoogleAccount(account);
-            this.navigateTo(new ReportArticleFragment(), false);
+            this.navigateTo(new PasteArticleFragment(), false);
         }
     }
 

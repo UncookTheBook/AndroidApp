@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">Uncook the book</string>
-    <string name="hint_username">Username</string>
-    <string name="hint_password">Password</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="error_password">Password must contain at least 8 characters.</string>
-    <string name="product_title">Title</string>
-    <string name="product_description">Secondary text</string>
     <string name="leaderboard_label">Leaderboard</string>
     <string name="logout_label">Logout</string>
     <string name="article_report_label">Article report</string>
@@ -19,4 +13,12 @@
     </string>
     <string name="login_failed">Sorry, we couldn\'t log you in. Please try again</string>
     <string name="welcome">Welcome,  %1$s</string>
+    <string name="link_hint">Article link:</string>
+    <string name="paste_label">Past here the article link</string>
+    <string name="info_title">How it works</string>
+    <string name="info_paste_article">
+        Paste any article link to get information regarding its truthfulness
+        and to report whether it\'s reliable or not
+    </string>
+    <string name="info_accept">Got it</string>
 </resources>
