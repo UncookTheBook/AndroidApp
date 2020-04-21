@@ -1,7 +1,10 @@
 package com.uncookthebook.app;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +20,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import java.util.Objects;
 
 
 public class PasteArticleFragment extends GeneralTopBarFragment {
@@ -38,4 +43,27 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
         layoutSetup(view, new ArrayList<>(Collections.singletonList(editText)));
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        skipIfNeeded();
+    }
+
+    private void skipIfNeeded() {
+        final SharedPreferences sharedPref = Objects.requireNonNull(getContext()).getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        final boolean skip = sharedPref.getBoolean(getString(R.string.skip_key), false);
+        if(skip) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.remove(getString(R.string.skip_key));
+            editor.apply();
+            ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
+                    new ReportArticleFragment(), false
+            );
+        }
+    }
+
 }
