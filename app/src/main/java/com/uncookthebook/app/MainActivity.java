@@ -1,5 +1,6 @@
 package com.uncookthebook.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                     .add(R.id.container, new LoginFragment())
                     .commit();
         }
-
         setupLogin();
+        setupShareIntent();
     }
 
     @Override
@@ -70,6 +71,26 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void setupShareIntent(){
+        // Get intent, action and MIME type
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                handleTextReceived(intent); // Handle text being sent
+            }
+        }
+    }
+
+    void handleTextReceived(Intent intent) {
+        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (sharedText != null) {
+            Log.d("AS", sharedText);
+        }
     }
 
     @Override
