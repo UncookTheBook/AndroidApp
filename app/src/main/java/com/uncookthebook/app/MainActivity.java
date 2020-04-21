@@ -1,6 +1,9 @@
 package com.uncookthebook.app;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +15,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import static com.uncookthebook.app.Utils.isURL;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity {
     private GoogleSignInClient mGoogleSignInClient;
@@ -42,6 +47,20 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
             setGoogleAccount(account);
             this.navigateTo(new PasteArticleFragment(), false);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearSharedPrefs();
+    }
+
+    private void clearSharedPrefs() {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        sharedPref.edit().clear().apply();
     }
 
     /**
@@ -86,10 +105,20 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     void handleTextReceived(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
-            Log.d("AS", sharedText);
+            if(isURL(sharedText)){
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                                getString(R.string.preference_file_key),
+                                Context.MODE_PRIVATE
+                );
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean(getString(R.string.skip_key), true);
+                editor.putString( getString(R.string.url_key), sharedText);
+                editor.commit();
+            }
         }
     }
 

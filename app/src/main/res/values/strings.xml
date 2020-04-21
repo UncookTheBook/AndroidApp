@@ -21,4 +21,7 @@
         and to report whether it\'s reliable or not
     </string>
     <string name="info_accept">Got it</string>
+    <string name="preference_file_key">key</string>
+    <string name="skip_key">skip</string>
+    <string name="url_key">url</string>
 </resources>
