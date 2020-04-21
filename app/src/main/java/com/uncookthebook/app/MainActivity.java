@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -87,4 +87,5 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
     }
+
 }
