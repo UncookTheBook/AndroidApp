@@ -8,13 +8,13 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
 
 public class GeneralTopBarFragment extends Fragment {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +22,36 @@ public class GeneralTopBarFragment extends Fragment {
     }
 
     protected void layoutSetup(View view) {
-        // Set up the toolbar
-        setUpToolbar(view);
+        ConstraintLayout content = view.findViewById(R.id.content);
+        Context context = Objects.requireNonNull(getContext());
+        NavigationIconClickListener nav = new NavigationIconClickListener(
+                context,
+                content,
+                new AccelerateDecelerateInterpolator(),
+                context.getResources().getDrawable(R.drawable.ic_menu), // Menu open icon
+                context.getResources().getDrawable(R.drawable.ic_close_menu));
+
+        setUpToolbar(view, nav);
         showUserName(view);
-        // Set cut corner background for API 23+
+        closeMenuOnContentClick(view, content, nav);
+        setCutCorner(view);
+    }
+
+    private void setCutCorner(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.content).setBackgroundResource(R.drawable.background_shape);
         }
     }
 
-    private void setUpToolbar(View view) {
+    private void closeMenuOnContentClick(View view, ConstraintLayout content, NavigationIconClickListener nav) {
+        content.setOnClickListener(v -> {
+            if(nav.isBackdropShown()) {
+                nav.closeMenu(view);
+            }
+        });
+    }
+
+    private void setUpToolbar(View view, NavigationIconClickListener nav) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
@@ -39,12 +59,7 @@ public class GeneralTopBarFragment extends Fragment {
         }
         Context context = getContext();
         if (context != null) {
-            toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
-                    context,
-                    view.findViewById(R.id.content),
-                    new AccelerateDecelerateInterpolator(),
-                    context.getResources().getDrawable(R.drawable.ic_menu), // Menu open icon
-                    context.getResources().getDrawable(R.drawable.ic_close_menu)));
+            toolbar.setNavigationOnClickListener(nav);
         }
     }
 

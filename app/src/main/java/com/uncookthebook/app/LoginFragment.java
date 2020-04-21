@@ -3,7 +3,6 @@ package com.uncookthebook.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         MaterialButton nextButton = view.findViewById(R.id.login_button);
 
         nextButton.setOnClickListener(view1 -> signIn());

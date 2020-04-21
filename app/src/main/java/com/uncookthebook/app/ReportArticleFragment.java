@@ -14,7 +14,7 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
-        View view = inflater.inflate(R.layout.report_article_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_report_article, container, false);
 
         layoutSetup(view);
         return view;

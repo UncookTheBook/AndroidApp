@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 
 /**
@@ -32,11 +33,11 @@ public class NavigationIconClickListener implements View.OnClickListener {
         this(context, sheet, null);
     }
 
-    NavigationIconClickListener(Context context, View sheet, @Nullable Interpolator interpolator) {
+    public NavigationIconClickListener(Context context, View sheet, @Nullable Interpolator interpolator) {
         this(context, sheet, interpolator, null, null);
     }
 
-    NavigationIconClickListener(
+    public NavigationIconClickListener(
             Context context, View sheet, @Nullable Interpolator interpolator,
             @Nullable Drawable openIcon, @Nullable Drawable closeIcon) {
         this.context = context;
@@ -53,13 +54,25 @@ public class NavigationIconClickListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         backdropShown = !backdropShown;
+        updateIcon(view);
 
+        performAnimation();
+    }
+
+    public void closeMenu(View view) {
+        backdropShown = false;
+
+        Toolbar toolbar = view.findViewById(R.id.app_bar);
+        toolbar.setNavigationIcon(context.getResources().getDrawable(R.drawable.ic_menu));
+
+        performAnimation();
+    }
+
+    private void performAnimation() {
         // Cancel the existing animations
         animatorSet.removeAllListeners();
         animatorSet.end();
         animatorSet.cancel();
-
-        updateIcon(view);
 
         final int translateY = (int) (height - height / DROPDOWN_HEIGHT_MULTIPLIER);
 
@@ -83,5 +96,9 @@ public class NavigationIconClickListener implements View.OnClickListener {
                 ((ImageView) view).setImageDrawable(openIcon);
             }
         }
+    }
+
+    public boolean isBackdropShown() {
+        return backdropShown;
     }
 }
