@@ -27,15 +27,15 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_paste_article, container, false);
-        EditText searchButton = view.findViewById(R.id.textEdit);
+        EditText editText = view.findViewById(R.id.textEdit);
         //Since edit text does override onClick and does not call it, I have to specify it manually
-        searchButton.setOnTouchListener((v, event) -> {
+        editText.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP && !v.hasFocus()) {
                 v.performClick();
             }
             return false;
         });
-        layoutSetup(view, new ArrayList<>(Collections.singletonList(searchButton)));
+        layoutSetup(view, new ArrayList<>(Collections.singletonList(editText)));
         return view;
     }
 }
