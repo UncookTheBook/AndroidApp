@@ -15,6 +15,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import static com.uncookthebook.app.Utils.isURL;
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new LoginFragment())
+                    .add(R.id.container, new LoadingFragment())
                     .commit();
         }
         setupLogin();
@@ -40,13 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null) {
-            //user is already signed in
-            Log.d("GoogleSignIn", "User is already logged");
-            setGoogleAccount(account);
-            this.navigateTo(new PasteArticleFragment(), false);
-        }
     }
 
     @Override
@@ -74,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                         .replace(R.id.container, fragment);
 
         if (addToBackstack) {
@@ -90,6 +86,26 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        // See https://developers.google.com/identity/sign-in/android/backend-auth
+        mGoogleSignInClient.silentSignIn().addOnCompleteListener(this, this::handleSilentSignInResult);
+    }
+
+    private void handleSilentSignInResult(Task<GoogleSignInAccount> task) {
+        try {
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            //User already signed in
+            if(account != null) {
+                Log.d("GoogleSignIn","User already signed in");
+                //Only for debugging
+                String idToken = account.getIdToken();
+                Log.d("MainActivity", idToken);
+                //
+                setGoogleAccount(account);
+                this.navigateTo(new PasteArticleFragment(), false);
+            }
+        } catch (ApiException e) {
+            this.navigateTo(new LoginFragment(), false);
+        }
     }
 
     private void setupShareIntent(){

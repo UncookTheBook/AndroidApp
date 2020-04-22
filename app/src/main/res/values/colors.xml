@@ -5,6 +5,7 @@
     <color name="colorAccent">#E040FB</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="loadingPageBackgroundColor">#673AB7</color>
     <color name="loginPageBackgroundColor">#303030</color>
     <color name="productGridBackgroundColor">@color/loginPageBackgroundColor</color>
     <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
