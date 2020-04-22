@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 
 public class ReportArticleFragment extends GeneralTopBarFragment {
 
@@ -16,7 +18,7 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_report_article, container, false);
 
-        layoutSetup(view);
+        layoutSetup(view, new ArrayList<>());
         return view;
     }
 
