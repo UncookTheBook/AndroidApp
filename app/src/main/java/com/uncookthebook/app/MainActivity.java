@@ -126,14 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             if(isURL(sharedText)){
-                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                                getString(R.string.preference_file_key),
-                                Context.MODE_PRIVATE
-                );
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean(getString(R.string.skip_key), true);
-                editor.putString( getString(R.string.url_key), sharedText);
-                editor.commit();
+                Utils.setURL(this, sharedText);
             }
         }
     }

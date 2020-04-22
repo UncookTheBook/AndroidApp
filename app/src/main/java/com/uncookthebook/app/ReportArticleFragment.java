@@ -24,7 +24,7 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_report_article, container, false);
 
-        layoutSetup(view, new ArrayList<>());
+        layoutSetup(view);
         return view;
     }
 
@@ -46,5 +46,10 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
             editor.apply();
             Log.d("URL", url);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

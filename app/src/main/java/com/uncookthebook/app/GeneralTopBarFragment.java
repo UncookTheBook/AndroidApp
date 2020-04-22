@@ -15,47 +15,46 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class GeneralTopBarFragment extends Fragment {
+public abstract class GeneralTopBarFragment extends Fragment implements View.OnClickListener {
+    private NavigationIconClickListener nav;
+    private View view;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
-    protected void layoutSetup(View view, List<View> elements) {
+    protected void layoutSetup(View view) {
+        this.view = view;
         ConstraintLayout content = view.findViewById(R.id.content);
-        elements.add(content);
         Context context = Objects.requireNonNull(getContext());
-        NavigationIconClickListener nav = new NavigationIconClickListener(
+        nav = new NavigationIconClickListener(
                 context,
                 content,
                 new AccelerateDecelerateInterpolator(),
                 context.getResources().getDrawable(R.drawable.ic_menu), // Menu open icon
                 context.getResources().getDrawable(R.drawable.ic_close_menu));
 
-        setUpToolbar(view, nav);
-        showUserName(view);
-        closeMenuOnElementClick(view, elements, nav);
-        setCutCorner(view);
+        setUpToolbar();
+        showUserName();
+        setCutCorner();
+        content.setOnClickListener(v -> closeMenuOnElementClick());
     }
 
-    private void setCutCorner(View view) {
+    private void setCutCorner() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.content).setBackgroundResource(R.drawable.background_shape);
         }
     }
 
-    private void closeMenuOnElementClick(View view, List<View> elements, NavigationIconClickListener nav) {
-        for (View element:elements) {
-            element.setOnClickListener(v -> {
-                if(nav.isBackdropShown()) {
-                    nav.closeMenu(view);
-                }
-            });
+    protected void closeMenuOnElementClick() {
+        if(nav.isBackdropShown()) {
+            nav.closeMenu(view);
         }
     }
 
-    private void setUpToolbar(View view, NavigationIconClickListener nav) {
+    private void setUpToolbar() {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
@@ -67,7 +66,7 @@ public class GeneralTopBarFragment extends Fragment {
         }
     }
 
-    private void showUserName(View view) {
+    private void showUserName() {
         Toolbar topBar = view.findViewById(R.id.app_bar);
         topBar.setTitle(String.format(getString(R.string.welcome), getUserName()));
     }
@@ -75,4 +74,7 @@ public class GeneralTopBarFragment extends Fragment {
     private String getUserName(){
         return ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount().getGivenName();
     }
+
+    @Override
+    public abstract void onClick(View v);
 }
