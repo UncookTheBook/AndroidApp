@@ -14,7 +14,7 @@
     <string name="login_failed">Sorry, we couldn\'t log you in. Please try again</string>
     <string name="welcome">Welcome,  %1$s</string>
     <string name="link_hint">Link:</string>
-    <string name="paste_label">Past here the article link</string>
+    <string name="paste_label">Paste here the article link</string>
     <string name="info_title">How it works</string>
     <string name="info_paste_article">
         Paste any article link to get information regarding its truthfulness

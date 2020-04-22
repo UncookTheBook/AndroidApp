@@ -10,12 +10,13 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
 
-    <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="hintTextAppearance">@style/TextAppearance.AppTheme.TextInputLayout.HintText</item>
         <item name="hintTextColor">@color/textColorPrimary</item>
         <item name="android:textColorHint">@color/textColorPrimary</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="boxStrokeColor">@color/textInputOutlineColor</item>
+        <item name="boxBackgroundColor">@color/activitiesBackgroundColor</item>
     </style>
 
     <style name="TextAppearance.AppTheme.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
