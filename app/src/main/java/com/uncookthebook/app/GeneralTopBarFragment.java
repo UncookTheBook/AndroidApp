@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -21,8 +22,9 @@ public class GeneralTopBarFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    protected void layoutSetup(View view) {
+    protected void layoutSetup(View view, List<View> elements) {
         ConstraintLayout content = view.findViewById(R.id.content);
+        elements.add(content);
         Context context = Objects.requireNonNull(getContext());
         NavigationIconClickListener nav = new NavigationIconClickListener(
                 context,
@@ -33,7 +35,7 @@ public class GeneralTopBarFragment extends Fragment {
 
         setUpToolbar(view, nav);
         showUserName(view);
-        closeMenuOnContentClick(view, content, nav);
+        closeMenuOnElementClick(view, elements, nav);
         setCutCorner(view);
     }
 
@@ -43,12 +45,14 @@ public class GeneralTopBarFragment extends Fragment {
         }
     }
 
-    private void closeMenuOnContentClick(View view, ConstraintLayout content, NavigationIconClickListener nav) {
-        content.setOnClickListener(v -> {
-            if(nav.isBackdropShown()) {
-                nav.closeMenu(view);
-            }
-        });
+    private void closeMenuOnElementClick(View view, List<View> elements, NavigationIconClickListener nav) {
+        for (View element:elements) {
+            element.setOnClickListener(v -> {
+                if(nav.isBackdropShown()) {
+                    nav.closeMenu(view);
+                }
+            });
+        }
     }
 
     private void setUpToolbar(View view, NavigationIconClickListener nav) {
