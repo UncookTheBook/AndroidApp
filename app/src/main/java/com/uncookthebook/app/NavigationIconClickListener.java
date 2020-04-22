@@ -77,7 +77,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
         final int translateY = (int) (height - height / DROPDOWN_HEIGHT_MULTIPLIER);
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(sheet, "translationY", backdropShown ? translateY : 0);
-        animator.setDuration(500);
+        animator.setDuration(250);
         if (interpolator != null) {
             animator.setInterpolator(interpolator);
         }
