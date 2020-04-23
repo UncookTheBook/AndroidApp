@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
 import java.util.Objects;
 
 
-public class ReportArticleFragment extends GeneralTopBarFragment {
+public class ReportArticleFragment extends Fragment {
     private String url;
 
     @Override
@@ -24,7 +25,6 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_report_article, container, false);
 
-        layoutSetup(view);
         return view;
     }
 
@@ -46,10 +46,5 @@ public class ReportArticleFragment extends GeneralTopBarFragment {
             editor.apply();
             Log.d("URL", url);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

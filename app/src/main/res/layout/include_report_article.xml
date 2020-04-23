@@ -9,12 +9,24 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
-        android:soundEffectsEnabled="false"
         android:background="@color/activitiesBackgroundColor"
+        android:soundEffectsEnabled="false"
         app:elevation="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_home"
+            style="@style/Widget.AppTheme.Button.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:icon="@drawable/ic_home_black_24dp"
+            app:iconSize="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.AppTheme.Button.Circle" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_fake"
@@ -40,12 +52,13 @@
             android:layout_gravity="center"
             android:layout_marginStart="52dp"
             android:layout_marginEnd="52dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             app:icon="@drawable/ic_like"
             app:iconSize="60dp"
             app:iconTint="@android:color/holo_green_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.AppTheme.Button.Circle" />
 
@@ -63,92 +76,103 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/reportedLegit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/thumbUP"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="@string/article_report_default_text"
-                android:src="@drawable/ic_like"
-                android:tint="@android:color/holo_green_dark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textReportLegitNumber"
-                style="@style/Widget.AppTheme.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/sample_number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/thumbUP"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textReportLegit"
-                style="@style/Widget.AppTheme.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/reported_legit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textReportLegitNumber"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/reportedFake"
+            android:id="@+id/reportSummary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/websiteStatus"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/reportedLegit"
-            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/articleTitle">
 
-            <ImageView
-                android:id="@+id/thumbDown"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="@string/article_report_default_text"
-                android:src="@drawable/ic_dislike"
-                android:tint="@android:color/holo_red_dark"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reportedLegit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textReportFakeNumber"
-                style="@style/Widget.AppTheme.TextView"
+                <ImageView
+                    android:id="@+id/thumbUP"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/article_report_default_text"
+                    android:src="@drawable/ic_like"
+                    android:tint="@android:color/holo_green_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textReportLegitNumber"
+                    style="@style/Widget.AppTheme.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/sample_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/thumbUP"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textReportLegit"
+                    style="@style/Widget.AppTheme.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/reported_legit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textReportLegitNumber"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reportedFake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/sample_number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/thumbDown"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reportedLegit">
 
-            <TextView
-                android:id="@+id/textReportFake"
-                style="@style/Widget.AppTheme.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/reported_fake"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textReportFakeNumber"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.50" />
+                <ImageView
+                    android:id="@+id/thumbDown"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/article_report_default_text"
+                    android:src="@drawable/ic_dislike"
+                    android:tint="@android:color/holo_red_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textReportFakeNumber"
+                    style="@style/Widget.AppTheme.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/sample_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/thumbDown"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textReportFake"
+                    style="@style/Widget.AppTheme.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/reported_fake"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textReportFakeNumber"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.50" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -156,10 +180,10 @@
             android:id="@+id/websiteStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_legit"
+            app:layout_constraintBottom_toTopOf="@+id/button_fake"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportSummary">
 
             <TextView
                 android:id="@+id/textView3"
@@ -186,37 +210,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/siteInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/siteLogo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/sample_url"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/siteLink"
-                style="@style/Widget.AppTheme.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/sample_url"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/siteLogo"
-                app:layout_constraintTop_toTopOf="@+id/siteLogo" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
             android:id="@+id/articleTitle"
             style="@style/Widget.AppTheme.TextView"
@@ -224,10 +217,33 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/sample_title"
-            app:layout_constraintBottom_toTopOf="@+id/reportedLegit"
+            app:layout_constraintBottom_toTopOf="@+id/reportSummary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/siteInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/siteLogo" />
+
+        <ImageView
+            android:id="@+id/siteLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/sample_url"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="@+id/button_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_home" />
+
+        <TextView
+            android:id="@+id/siteLink"
+            style="@style/Widget.AppTheme.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_url"
+            app:layout_constraintBottom_toBottomOf="@+id/button_home"
+            app:layout_constraintEnd_toStartOf="@+id/siteLogo"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintStart_toEndOf="@+id/button_home"
+            app:layout_constraintTop_toTopOf="@+id/button_home" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
