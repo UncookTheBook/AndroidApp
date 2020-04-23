@@ -11,20 +11,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
 
 public class ReportArticleFragment extends Fragment {
     private String url;
+    private ZoomOnClick animationHandler = new ZoomOnClick();
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_report_article, container, false);
-
+        voteButtonSetup(view, R.id.button_legit);
+        voteButtonSetup(view, R.id.button_fake);
+        homeButtonSetup(view);
         return view;
     }
 
@@ -46,5 +49,22 @@ public class ReportArticleFragment extends Fragment {
             editor.apply();
             Log.d("URL", url);
         }
+    }
+
+    private void voteButtonSetup(View view, int id){
+        MaterialButton button = view.findViewById(id);
+        animationHandler.addView(button);
+        button.setOnClickListener(v -> {
+            animationHandler.handleSize(v, getContext());
+        });
+    }
+
+    private void homeButtonSetup(View view){
+        MaterialButton button = view.findViewById(R.id.button_home);
+        button.setOnClickListener(v -> {
+            ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
+                    new PasteArticleFragment(), false
+            );
+        });
     }
 }
