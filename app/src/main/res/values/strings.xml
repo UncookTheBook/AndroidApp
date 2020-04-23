@@ -24,4 +24,13 @@
     <string name="preference_file_key">key</string>
     <string name="skip_key">skip</string>
     <string name="url_key">url</string>
+    <string name="website_rating">This website is rated as</string>
+    <string name="website_rating_default_number">100% Legit</string>
+    <string name="article_report_default_text">Article Legit</string>
+    <string name="article_report_title">Article report</string>
+    <string name="sample_url">https://www.repubblica.it/</string>
+    <string name="sample_title">"Coronavirus. “Dell’app Immuni si sa troppo poco. Meglio la soluzione svizzera” - la Repubblica"</string>
+    <string name="reported_fake">users reported it Fake</string>
+    <string name="reported_legit">users reported it Legit</string>
+    <string name="sample_number">115</string>
 </resources>

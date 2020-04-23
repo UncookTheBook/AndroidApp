@@ -29,12 +29,11 @@
 
         <TextView
             android:id="@+id/textView"
+            style="@style/Widget.AppTheme.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/paste_label"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="18sp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"

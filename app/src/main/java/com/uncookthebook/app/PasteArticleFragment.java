@@ -88,7 +88,7 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             editor.remove(getString(R.string.skip_key));
             editor.apply();
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
-                    new ReportArticleFragment(), false
+                    new ReportArticleFragment(), true
             );
         }
     }
