@@ -1,9 +1,12 @@
 package com.uncookthebook.app;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,14 +29,22 @@ import java.util.Objects;
 
 
 public class PasteArticleFragment extends GeneralTopBarFragment {
+    private EditText editText;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
         View view = inflater.inflate(R.layout.fragment_paste_article, container, false);
-        EditText editText = view.findViewById(R.id.textEdit);
+        layoutSetup(view);
+        editTextSetup(view);
+        view.findViewById(R.id.search_button).setOnClickListener(this);
+        return view;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void editTextSetup(View view) {
+        editText = view.findViewById(R.id.textEdit);
         //Since edit text does override onClick and does not call it, I have to specify it manually
         editText.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP && !v.hasFocus()) {
@@ -40,8 +52,23 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             }
             return false;
         });
-        layoutSetup(view, new ArrayList<>(Collections.singletonList(editText)));
-        return view;
+        editText.setOnClickListener(this);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (! Utils.isURL(editText.getText().toString())) {
+                    editText.setError("Invalid URL");
+                }
+            }
+        });
     }
 
     @Override
@@ -63,6 +90,19 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
                     new ReportArticleFragment(), false
             );
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.textEdit){
+            closeMenuOnElementClick();
+        }
+        if(v.getId() == R.id.search_button && Utils.isURL(editText.getText().toString())){
+            //I could have used bundles but since I already use SharedPreferences I am gonna reuse them
+            Activity activity = Objects.requireNonNull(getActivity());
+            Utils.setURL(activity, editText.getText().toString());
+            ((NavigationHost) activity).navigateTo(new ReportArticleFragment(), true);
         }
     }
 
