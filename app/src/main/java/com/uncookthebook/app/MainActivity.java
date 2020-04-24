@@ -17,10 +17,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.network.APIService;
+import com.uncookthebook.app.network.APIServiceUtils;
+import com.uncookthebook.app.models.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity {
+
+    private static final String TAG = "MainActivity";
+
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount userAccount;
 
@@ -95,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
             GoogleSignInAccount account = task.getResult(ApiException.class);
             //User already signed in
             if(account != null) {
-                Log.d("GoogleSignIn","User already signed in");
+                Log.d(TAG,"User already signed in");
                 //Only for debugging
                 String idToken = account.getIdToken();
-                Log.d("MainActivity", idToken);
+                Log.d(TAG, idToken);
                 //
                 setGoogleAccount(account);
                 this.navigateTo(new PasteArticleFragment(), false);
@@ -152,6 +163,26 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
+
+        // Use case of APIServiceClient
+        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
+        User user = new User(account.getId(), account.getGivenName(),
+                account.getFamilyName(), account.getEmail());
+        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken() + "casda", user)).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                //do something
+                Log.d(TAG, "Is request successful? " + response.isSuccessful());
+                Log.d(TAG, "Response body: " + response.body());
+                Log.d(TAG, "Response code and message: " + response.code() + ", " + response.message());
+                Log.d(TAG, "Raw response: " + response.raw());
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                //do something
+                Log.d(TAG, t.getMessage());
+            }
+        });
     }
 
 }
