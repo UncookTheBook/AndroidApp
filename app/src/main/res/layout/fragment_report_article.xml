@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.uncookthebook.app.ReportArticleFragment">
 
-    <include layout="@layout/include_top_bar"/>
     <include layout="@layout/include_report_article"/>
 
 </FrameLayout>

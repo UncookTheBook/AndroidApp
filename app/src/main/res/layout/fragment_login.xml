@@ -40,6 +40,7 @@
 
     <TextView
         android:id="@+id/textInformation"
+        style="@style/Widget.AppTheme.TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -48,8 +49,6 @@
         android:layout_marginBottom="120dp"
         android:text="@string/login_explanation"
         android:textAlignment="center"
-        android:textColor="@color/textColorPrimary"
-        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
