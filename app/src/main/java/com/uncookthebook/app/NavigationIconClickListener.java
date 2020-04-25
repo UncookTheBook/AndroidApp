@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
  * the Y-axis when the navigation icon in the toolbar is pressed.
  */
 public class NavigationIconClickListener implements View.OnClickListener {
-
     private static final float DROPDOWN_HEIGHT_MULTIPLIER = 1.4f;
     private final AnimatorSet animatorSet = new AnimatorSet();
     private Context context;
@@ -29,15 +29,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
     private Drawable openIcon;
     private Drawable closeIcon;
 
-    public NavigationIconClickListener(Context context, View sheet) {
-        this(context, sheet, null);
-    }
-
-    public NavigationIconClickListener(Context context, View sheet, @Nullable Interpolator interpolator) {
-        this(context, sheet, interpolator, null, null);
-    }
-
-    public NavigationIconClickListener(
+    NavigationIconClickListener(
             Context context, View sheet, @Nullable Interpolator interpolator,
             @Nullable Drawable openIcon, @Nullable Drawable closeIcon) {
         this.context = context;
@@ -59,7 +51,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
         performAnimation();
     }
 
-    public void closeMenu(View view) {
+    void closeMenu(View view) {
         backdropShown = false;
 
         Toolbar toolbar = view.findViewById(R.id.app_bar);
@@ -98,7 +90,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
         }
     }
 
-    public boolean isBackdropShown() {
+    boolean isBackdropShown() {
         return backdropShown;
     }
 }

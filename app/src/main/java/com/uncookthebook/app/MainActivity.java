@@ -1,9 +1,6 @@
 package com.uncookthebook.app;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -17,14 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.uncookthebook.app.models.TokenizedObject;
-import com.uncookthebook.app.network.APIService;
-import com.uncookthebook.app.network.APIServiceUtils;
-import com.uncookthebook.app.models.User;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
 
@@ -58,15 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        clearSharedPrefs();
-    }
-
-    private void clearSharedPrefs() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE
-        );
-        sharedPref.edit().clear().apply();
+        Utils.clearSharedPrefs(getApplicationContext());
     }
 
     /**
@@ -132,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         }
     }
 
-    @SuppressLint("ApplySharedPref")
     void handleTextReceived(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
@@ -156,26 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
-
-        // Use case of APIServiceClient
-        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
-        User user = new User(account.getId(), account.getGivenName(),
-                account.getFamilyName(), account.getEmail());
-        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken() + "casda", user)).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                //do something
-                Log.d(TAG, "Is request successful? " + response.isSuccessful());
-                Log.d(TAG, "Response body: " + response.body());
-                Log.d(TAG, "Response code and message: " + response.code() + ", " + response.message());
-                Log.d(TAG, "Raw response: " + response.raw());
-            }
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                //do something
-                Log.d(TAG, t.getMessage());
-            }
-        });
+        ServerManager.sendUserToServer(account, TAG);
     }
+
 
 }
