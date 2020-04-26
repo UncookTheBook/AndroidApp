@@ -17,6 +17,9 @@ import java.util.Objects;
 
 
 public class ReportArticleFragment extends Fragment {
+
+    private static final String TAG = "ReportArticleFragment";
+
     private String url;
     private ZoomOnClick animationHandler = new ZoomOnClick();
 
