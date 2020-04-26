@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class APIServiceUtils {
     //endpoint
-    private static final String BASE_URL = "https://ec2-52-215-181-59.eu-west-1.compute.amazonaws.com/";
+    private static final String BASE_URL = "https://10.0.2.2:8000/"; //10.0.2.2 to make the emulator contact localhost
 
     private static final Retrofit retrofit = new Retrofit.Builder()
             .client(getUnsafeOkHttpClient())
