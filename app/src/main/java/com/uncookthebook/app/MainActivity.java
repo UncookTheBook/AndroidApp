@@ -1,9 +1,6 @@
 package com.uncookthebook.app;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -60,15 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        clearSharedPrefs();
-    }
-
-    private void clearSharedPrefs() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE
-        );
-        sharedPref.edit().clear().apply();
+        Utils.clearSharedPrefs(getApplicationContext());
     }
 
     /**
@@ -78,12 +67,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
      * @param addToBackstack Whether or not the current fragment should be added to the backstack.
      */
     @Override
-    public void navigateTo(Fragment fragment, boolean addToBackstack) {
+    public void navigateTo(Fragment fragment, boolean addToBackstack, String fragmentTag) {
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.container, fragment);
+                        .replace(R.id.container, fragment, fragmentTag);
 
         if (addToBackstack) {
             transaction.addToBackStack(null);
@@ -114,10 +103,10 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                 Log.d(TAG, idToken);
                 //
                 setGoogleAccount(account);
-                this.navigateTo(new PasteArticleFragment(), false);
+                this.navigateTo(new PasteArticleFragment(), false, getString(R.string.paste_article_tag));
             }
         } catch (ApiException e) {
-            this.navigateTo(new LoginFragment(), false);
+            this.navigateTo(new LoginFragment(), false, getString(R.string.login_tag));
         }
     }
 
@@ -134,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
         }
     }
 
-    @SuppressLint("ApplySharedPref")
     void handleTextReceived(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
@@ -189,5 +177,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                     }
                 });
     }
+
 
 }
