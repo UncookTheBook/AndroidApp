@@ -4,14 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 /**
  * Models a User.
  */
 @Getter
+@ToString
 public final class User implements Model {
     @SerializedName("uid")
-    private String uid;
+    private final String uid;
     @SerializedName("name")
     private final String name;
     @SerializedName("surname")
