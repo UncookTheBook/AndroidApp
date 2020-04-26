@@ -63,7 +63,7 @@ public class ReportArticleFragment extends Fragment {
         MaterialButton button = view.findViewById(R.id.button_home);
         button.setOnClickListener(v -> {
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
-                    new PasteArticleFragment(), false
+                    new PasteArticleFragment(), false, getString(R.string.paste_article_tag)
             );
         });
     }

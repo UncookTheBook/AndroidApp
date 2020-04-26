@@ -14,6 +14,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.models.User;
+import com.uncookthebook.app.network.APIService;
+import com.uncookthebook.app.network.APIServiceUtils;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
 
@@ -57,12 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
      * @param addToBackstack Whether or not the current fragment should be added to the backstack.
      */
     @Override
-    public void navigateTo(Fragment fragment, boolean addToBackstack) {
+    public void navigateTo(Fragment fragment, boolean addToBackstack, String fragmentTag) {
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .replace(R.id.container, fragment);
+                        .replace(R.id.container, fragment, fragmentTag);
 
         if (addToBackstack) {
             transaction.addToBackStack(null);
@@ -93,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                 Log.d(TAG, idToken);
                 //
                 setGoogleAccount(account);
-                this.navigateTo(new PasteArticleFragment(), false);
+                this.navigateTo(new PasteArticleFragment(), false, getString(R.string.paste_article_tag));
             }
         } catch (ApiException e) {
-            this.navigateTo(new LoginFragment(), false);
+            this.navigateTo(new LoginFragment(), false, getString(R.string.login_tag));
         }
     }
 
@@ -136,7 +144,25 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
-        ServerManager.sendUserToServer(account, TAG);
+        // Use case of APIServiceClient
+        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
+        User user = new User(account.getId(), account.getGivenName(),
+                account.getFamilyName(), account.getEmail());
+        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken() + "casda", user)).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                //do something
+                Log.d(TAG, "Is request successful? " + response.isSuccessful());
+                Log.d(TAG, "Response body: " + response.body());
+                Log.d(TAG, "Response code and message: " + response.code() + ", " + response.message());
+                Log.d(TAG, "Raw response: " + response.raw());
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                //do something
+                Log.d(TAG, t.getMessage());
+            }
+        });
     }
 
 

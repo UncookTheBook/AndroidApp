@@ -78,7 +78,7 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             editor.remove(getString(R.string.skip_key));
             editor.apply();
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
-                    new ReportArticleFragment(), true
+                    new ReportArticleFragment(), true, getString(R.string.report_article_tag)
             );
         }
     }
@@ -92,7 +92,11 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             //I could have used bundles but since I already use SharedPreferences I am gonna reuse them
             Activity activity = Objects.requireNonNull(getActivity());
             Utils.setURL(activity, editText.getText().toString());
-            ((NavigationHost) activity).navigateTo(new ReportArticleFragment(), true);
+            ((NavigationHost) activity).navigateTo(
+                    new ReportArticleFragment(),
+                    true,
+                    getString(R.string.report_article_tag)
+            );
         }
     }
 

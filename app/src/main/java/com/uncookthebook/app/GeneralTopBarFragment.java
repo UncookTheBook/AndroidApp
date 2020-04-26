@@ -1,5 +1,6 @@
 package com.uncookthebook.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
@@ -63,6 +67,7 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
         if (context != null) {
             toolbar.setNavigationOnClickListener(nav);
         }
+        setupToolbarButtons();
     }
 
     private void showUserName() {
@@ -72,6 +77,41 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
 
     private String getUserName(){
         return ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount().getGivenName();
+    }
+
+    private void setupToolbarButtons(){
+        FragmentManager fragmentManager = Objects.requireNonNull(getFragmentManager());
+        Activity activity = Objects.requireNonNull(getActivity());
+
+        MaterialButton homeButton = view.findViewById(R.id.button_home);
+        MaterialButton leaderboardButton = view.findViewById(R.id.button_leadearboard);
+        MaterialButton logout = view.findViewById(R.id.button_logout);
+
+        homeButton.setOnClickListener(v -> {
+            PasteArticleFragment pasteArticleFragment = (PasteArticleFragment) fragmentManager.findFragmentByTag(getString(R.string.paste_article_tag));
+            //check if paste article fragment is not the current visible one
+            if (pasteArticleFragment == null || !pasteArticleFragment.isVisible()) {
+                //then we load it
+                ((NavigationHost) activity).navigateTo(new PasteArticleFragment(), true, getString(R.string.paste_article_tag));
+            }
+        });
+
+        leaderboardButton.setOnClickListener(v -> {
+            LeaderboardFragment leaderboardFragment = (LeaderboardFragment) fragmentManager.findFragmentByTag(getString(R.string.leaderboard_tag));
+            if (leaderboardFragment == null || !leaderboardFragment.isVisible()) {
+                ((NavigationHost) activity).navigateTo(new LeaderboardFragment(), true, getString(R.string.leaderboard_tag));
+            }
+        });
+
+        logout.setOnClickListener(v -> {
+            ((GoogleActivity) activity).getGoogleClient().signOut()
+                    .addOnCompleteListener(activity, task -> {
+                        LoginFragment loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(getString(R.string.login_tag));
+                        if (loginFragment == null || !loginFragment.isVisible()) {
+                            ((NavigationHost) activity).navigateTo(new LoginFragment(), true, getString(R.string.login_tag));
+                        }
+                    });
+        });
     }
 
     @Override
