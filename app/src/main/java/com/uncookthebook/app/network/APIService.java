@@ -8,9 +8,7 @@ import com.uncookthebook.app.models.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * The Retrofit's API Service.
@@ -26,7 +24,4 @@ public interface APIService {
 
     @POST("/utb/submit_report")
     Call<String> submitReport(@Body TokenizedObject<Report> request);
-
-    @GET("{url}")
-    Call<String> getWebsiteIcon(@Path("url") String url);
 }
