@@ -11,7 +11,7 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public final class User implements Model {
+public class User implements Model {
     @SerializedName("uid")
     private final String uid;
     @SerializedName("name")

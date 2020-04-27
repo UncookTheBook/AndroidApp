@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
+import com.uncookthebook.app.models.Report;
 import com.uncookthebook.app.models.TokenizedObject;
 import com.uncookthebook.app.models.User;
 import com.uncookthebook.app.network.APIService;
@@ -173,6 +174,19 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
 
                     @Override
                     public void onFailure(Call<GetArticleResponse> call, Throwable t) {
+                        Log.d(TAG, t.getMessage());
+                    }
+                });
+        // Use case of submitReport
+        apiServiceClient.submitReport(new TokenizedObject<>(account.getIdToken(), new Report("https://www.repubblica.it/politica/2020/04/26/news/coronavirus_riaperture_cabina_regia_governo_regioni-assadas928829/?ref=RHPPTP-BH-I254934416-C12-P2-S1.12-T1", account.getId(), Report.ReportValue.LEGIT)))
+                .enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        //check for the response code
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
                         Log.d(TAG, t.getMessage());
                     }
                 });
