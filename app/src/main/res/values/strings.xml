@@ -37,4 +37,6 @@
     <string name="report_article_tag">report_article_tag</string>
     <string name="login_tag">login_tag</string>
     <string name="leaderboard_tag">leaderboard_tag</string>
+    <string name="sample_name">Matteo</string>
+    <string name="leadearboard_position">Your position:</string>
 </resources>
