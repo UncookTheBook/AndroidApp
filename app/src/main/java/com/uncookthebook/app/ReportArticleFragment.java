@@ -12,18 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -65,7 +62,7 @@ public class ReportArticleFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        APIServiceUtils.getClient().dispatcher().cancelAll();
+        APIServiceUtils.getOkHttpClient().dispatcher().cancelAll();
     }
 
     @SneakyThrows
@@ -104,16 +101,12 @@ public class ReportArticleFragment extends Fragment {
     private void setSiteLogo(String src) {
         Log.d("SRC", src);
         final String TAG = "SITE_LOGO_RETRIEVAL";
-        final OkHttpClient okHttpClient = APIServiceUtils.getClient();
+        OkHttpClient okHttpClient = APIServiceUtils.getOkHttpClient();
         final Request request = new Request.Builder().url(src).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
-                Log.e(TAG, e.toString());
-            }
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
+            public void onResponse(Call call, Response response) {
+                // TODO check also response.code
                 if (response.isSuccessful() && response.body() != null){
                     final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                     new Handler(Looper.getMainLooper()).post(() -> {
@@ -125,6 +118,12 @@ public class ReportArticleFragment extends Fragment {
                     view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                     Log.e(TAG, response.toString());
                 }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
+                Log.e(TAG, e.getMessage());
             }
         });
     }
