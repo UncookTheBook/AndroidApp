@@ -2,12 +2,15 @@ package com.uncookthebook.app.network;
 
 import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
+import com.uncookthebook.app.models.Report;
 import com.uncookthebook.app.models.TokenizedObject;
 import com.uncookthebook.app.models.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * The Retrofit's API Service.
@@ -16,8 +19,14 @@ import retrofit2.http.POST;
 public interface APIService {
 
     @POST("/utb/add_user")
-    Call<String> addUser(@Body TokenizedObject<User> user);
+    Call<String> addUser(@Body TokenizedObject<User> request);
 
     @POST("/utb/get_article")
     Call<GetArticleResponse> getArticle(@Body TokenizedObject<GetArticleRequest> request);
+
+    @POST("/utb/submit_report")
+    Call<String> submitReport(@Body TokenizedObject<Report> request);
+
+    @GET("{url}")
+    Call<String> getWebsiteIcon(@Path("url") String url);
 }
