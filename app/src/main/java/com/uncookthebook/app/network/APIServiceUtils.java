@@ -7,6 +7,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import lombok.Getter;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,8 +19,10 @@ public class APIServiceUtils {
     //endpoint
     private static final String BASE_URL = "https://10.0.2.2:8000/"; //10.0.2.2 to make the emulator contact localhost
 
+    @Getter private static final OkHttpClient client = getUnsafeOkHttpClient();
+
     private static final Retrofit retrofit = new Retrofit.Builder()
-            .client(getUnsafeOkHttpClient())
+            .client(client)
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()) //uses gson to deserialize
             .build();

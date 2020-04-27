@@ -25,4 +25,12 @@ public class Utils {
         editor.putString(activity.getString(R.string.url_key), url);
         editor.commit();
     }
+
+    public static void clearSharedPrefs(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        sharedPref.edit().clear().apply();
+    }
 }

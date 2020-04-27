@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.uncookthebook.app.network.APIService;
+import com.uncookthebook.app.network.APIServiceUtils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -60,6 +62,12 @@ public class ReportArticleFragment extends Fragment {
         setSiteTitle();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        APIServiceUtils.getClient().dispatcher().cancelAll();
+    }
+
     @SneakyThrows
     private void getURL() {
         final SharedPreferences sharedPref = Objects.requireNonNull(getContext()).getSharedPreferences(
@@ -71,8 +79,8 @@ public class ReportArticleFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.remove(getString(R.string.url_key));
             editor.apply();
-            Log.d("URL", urlString);
             this.url = new URL(urlString);
+            Utils.clearSharedPrefs(getContext());
         }
     }
 
@@ -94,12 +102,14 @@ public class ReportArticleFragment extends Fragment {
     }
 
     private void setSiteLogo(String src) {
+        Log.d("SRC", src);
         final String TAG = "SITE_LOGO_RETRIEVAL";
-        final OkHttpClient okHttpClient = new OkHttpClient();
+        final OkHttpClient okHttpClient = APIServiceUtils.getClient();
         final Request request = new Request.Builder().url(src).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                 Log.e(TAG, e.toString());
             }
             @Override
@@ -107,11 +117,12 @@ public class ReportArticleFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null){
                     final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                     new Handler(Looper.getMainLooper()).post(() -> {
-                        view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);;
+                        view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                         ImageView imageView = view.findViewById(R.id.siteLogo);
                         imageView.setImageBitmap(bitmap);
                     });
                 }else {
+                    view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                     Log.e(TAG, response.toString());
                 }
             }

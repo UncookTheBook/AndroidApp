@@ -60,15 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        clearSharedPrefs();
-    }
-
-    private void clearSharedPrefs() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE
-        );
-        sharedPref.edit().clear().apply();
+        Utils.clearSharedPrefs(getApplicationContext());
     }
 
     /**
