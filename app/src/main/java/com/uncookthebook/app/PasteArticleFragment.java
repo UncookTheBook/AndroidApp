@@ -7,23 +7,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.google.android.material.textfield.TextInputLayout;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import java.util.Objects;
 
@@ -88,7 +78,7 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             editor.remove(getString(R.string.skip_key));
             editor.apply();
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
-                    new ReportArticleFragment(), true
+                    new ReportArticleFragment(), true, getString(R.string.report_article_tag)
             );
         }
     }
@@ -102,7 +92,11 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             //I could have used bundles but since I already use SharedPreferences I am gonna reuse them
             Activity activity = Objects.requireNonNull(getActivity());
             Utils.setURL(activity, editText.getText().toString());
-            ((NavigationHost) activity).navigateTo(new ReportArticleFragment(), true);
+            ((NavigationHost) activity).navigateTo(
+                    new ReportArticleFragment(),
+                    true,
+                    getString(R.string.report_article_tag)
+            );
         }
     }
 

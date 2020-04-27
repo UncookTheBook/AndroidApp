@@ -8,14 +8,14 @@ import android.content.SharedPreferences;
 
 import androidx.core.util.PatternsCompat;
 
-public class Utils {
+class Utils {
 
-    public static boolean isURL(String url){
+    static boolean isURL(String url){
         return  PatternsCompat.WEB_URL.matcher(url).matches();
     }
 
     @SuppressLint("ApplySharedPref")
-    public static void setURL(Activity activity, String url){
+    static void setURL(Activity activity, String url){
         SharedPreferences sharedPref = activity.getApplicationContext().getSharedPreferences(
                 activity.getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE
@@ -26,7 +26,7 @@ public class Utils {
         editor.commit();
     }
 
-    public static void clearSharedPrefs(Context context) {
+    static void clearSharedPrefs(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE

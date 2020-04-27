@@ -10,4 +10,5 @@
     <color name="activitiesBackgroundColor">@color/loginPageBackgroundColor</color>
     <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
+    <color name="ic_launcher_background">#673AB7</color>
 </resources>
