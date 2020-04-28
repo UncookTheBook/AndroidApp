@@ -12,6 +12,7 @@
         234949874727-7pbe1gebujhcicmo1c0i35o948fe7oqa.apps.googleusercontent.com
     </string>
     <string name="login_failed">Sorry, we couldn\'t log you in. Please try again</string>
+    <string name="article_data_retrieval_failed">Sorry, we couldn\'t retrieve any article data. Please try again</string>
     <string name="welcome">Welcome,  %1$s</string>
     <string name="link_hint">Link:</string>
     <string name="paste_label">Paste here the article link</string>

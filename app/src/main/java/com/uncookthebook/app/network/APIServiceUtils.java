@@ -2,8 +2,6 @@ package com.uncookthebook.app.network;
 
 import android.annotation.SuppressLint;
 
-import java.util.concurrent.Executors;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
