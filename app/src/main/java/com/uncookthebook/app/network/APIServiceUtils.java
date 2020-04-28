@@ -2,6 +2,8 @@ package com.uncookthebook.app.network;
 
 import android.annotation.SuppressLint;
 
+import java.util.concurrent.Executors;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -18,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class APIServiceUtils {
     //endpoint
-    private static final String BASE_URL = "https://10.0.2.2:8000/"; //10.0.2.2 to make the emulator contact localhost
+    private static final String BASE_URL = "https://52.215.181.59:443/"; //10.0.2.2 to make the emulator contact localhost
 
     /**
      * @return the OkHttpClient
