@@ -1,4 +1,4 @@
-package com.uncookthebook.app.recyclerManager;
+package com.uncookthebook.app.leadearboard;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Adapter used to show a simple grid of products.
+ * Adapter used to show the leadearboard.
  */
 public class LeadearboardItemRecyclerViewAdapter extends RecyclerView.Adapter<LeadearboardItemViewHolder> {
     private int playerPositon;

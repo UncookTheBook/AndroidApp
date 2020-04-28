@@ -1,4 +1,4 @@
-package com.uncookthebook.app.recyclerManager;
+package com.uncookthebook.app.leadearboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,8 @@ public class PersonEntry {
     @NonNull Integer points;
 
 
-    public static List<PersonEntry> initProductEntryList(){
+    public static List<PersonEntry> initProductEntryList(boolean isFriendsLeadearboard){
+        //TODO remove the randomData  and use isFriendsLeadearboard to load the correct set of data
         List<PersonEntry> personEntries = generateRandomData();
         return personEntries;
     }

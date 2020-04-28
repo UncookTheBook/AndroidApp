@@ -1,4 +1,4 @@
-package com.uncookthebook.app.recyclerManager;
+package com.uncookthebook.app.leadearboard;
 
 
 import androidx.recyclerview.widget.RecyclerView;

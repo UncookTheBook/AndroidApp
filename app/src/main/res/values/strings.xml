@@ -39,4 +39,6 @@
     <string name="leaderboard_tag">leaderboard_tag</string>
     <string name="sample_name">Matteo</string>
     <string name="leadearboard_position">Your position:</string>
+    <string name="global_leadearboard">Global</string>
+    <string name="friends_leadearboard">Friends</string>
 </resources>
