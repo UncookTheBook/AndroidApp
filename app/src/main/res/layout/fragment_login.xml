@@ -7,6 +7,7 @@
     android:background="@color/loginPageBackgroundColor"
     tools:context="com.uncookthebook.app.LoginFragment">
 
+    <include layout="@layout/include_loading_spinner"/>
 
     <ImageView
         android:id="@+id/imageView"

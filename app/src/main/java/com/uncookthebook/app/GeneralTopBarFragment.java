@@ -107,9 +107,13 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
         logout.setOnClickListener(v -> {
             ((GoogleActivity) activity).getGoogleClient().signOut()
                     .addOnCompleteListener(activity, task -> {
+                        //we clear all the previous fragments
+                        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                            fragmentManager.popBackStack();
+                        }
                         LoginFragment loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(getString(R.string.login_tag));
                         if (loginFragment == null || !loginFragment.isVisible()) {
-                            ((NavigationHost) activity).navigateTo(new LoginFragment(), true, getString(R.string.login_tag));
+                            ((NavigationHost) activity).navigateTo(new LoginFragment(), false, getString(R.string.login_tag));
                         }
                     });
         });

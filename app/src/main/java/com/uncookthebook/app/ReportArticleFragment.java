@@ -12,12 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.button.MaterialButton;
+import com.uncookthebook.app.models.Article;
+import com.uncookthebook.app.models.GetArticleRequest;
+import com.uncookthebook.app.models.GetArticleResponse;
+import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
 import java.io.IOException;
@@ -25,11 +33,13 @@ import java.net.URL;
 import java.util.Objects;
 
 import lombok.SneakyThrows;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.uncookthebook.app.Utils.*;
 
 
 public class ReportArticleFragment extends Fragment {
@@ -55,6 +65,7 @@ public class ReportArticleFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getURL();
+        retrieveArticleInformation();
         setSiteLogo(url.getProtocol() + "://" + url.getHost() + "/favicon.ico");
         setSiteTitle();
     }
@@ -77,7 +88,7 @@ public class ReportArticleFragment extends Fragment {
             editor.remove(getString(R.string.url_key));
             editor.apply();
             this.url = new URL(urlString);
-            Utils.clearSharedPrefs(getContext());
+            clearSharedPrefs(getContext());
         }
     }
 
@@ -102,28 +113,26 @@ public class ReportArticleFragment extends Fragment {
         Log.d("SRC", src);
         final String TAG = "SITE_LOGO_RETRIEVAL";
         OkHttpClient okHttpClient = APIServiceUtils.getOkHttpClient();
-        final Request request = new Request.Builder().url(src).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        final Request request = new okhttp3.Request.Builder().url(src).build();
+        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
-            public void onResponse(Call call, Response response) {
+            //okhttp3. prefix necessary to avoid conflicts with retrofit
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) {
                 // TODO check also response.code
                 if (response.isSuccessful() && response.body() != null){
                     final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                     new Handler(Looper.getMainLooper()).post(() -> {
-                        view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                         ImageView imageView = view.findViewById(R.id.siteLogo);
                         imageView.setImageBitmap(bitmap);
                     });
                 }else {
-                    view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
                     Log.e(TAG, response.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                view.findViewById(R.id.image_progress_loader).setVisibility(View.INVISIBLE);
-                Log.e(TAG, e.getMessage());
+            public void onFailure(okhttp3.Call call, IOException e) {
+                Log.e(TAG, e.toString());
             }
         });
     }
@@ -131,5 +140,45 @@ public class ReportArticleFragment extends Fragment {
     private void setSiteTitle(){
         TextView textView = view.findViewById(R.id.siteName);
         textView.setText(url.getHost());
+    }
+
+    private void retrieveArticleInformation(){
+        view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+        GoogleSignInAccount account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
+        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
+        apiServiceClient.getArticle(new TokenizedObject<>(account.getIdToken(), new GetArticleRequest(url.toString(), url.getHost())))
+                .enqueue(new Callback<GetArticleResponse>() {
+                    @Override
+                    public void onResponse(Call<GetArticleResponse> call, Response<GetArticleResponse> response) {
+                        //need to check for body to avoid IDE warning
+                        if(response.code() != 200 || response.body() == null){
+                            showFailedArticleDataRetrieval();
+                        }else{
+                            view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
+                            Article article = response.body().getArticle();
+                            setupUI(article);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetArticleResponse> call, Throwable t) {
+                        Log.d(TAG, t.toString());
+                        showFailedArticleDataRetrieval();
+                    }
+                });
+    }
+
+    private void setupUI(Article article){
+        setTextViewTo(view, R.id.articleTitle, article.getName());
+        setTextViewTo(view, R.id.textReportLegitNumber, Integer.toString(article.getPositiveReports()));
+        setTextViewTo(view, R.id.textReportFakeNumber, Integer.toString(article.getNegativeReports()));
+    }
+
+    private void showFailedArticleDataRetrieval() {
+        ProgressBar progressBar = view.findViewById(R.id.loading);
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(
+                getContext(), getString(R.string.article_data_retrieval_failed), Toast.LENGTH_SHORT
+        ).show();
     }
 }

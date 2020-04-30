@@ -147,49 +147,20 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
-        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
-        //Use case of addUser
-        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken(), new User(account.getId(), account.getGivenName(), account.getFamilyName(), account.getEmail())))
-                .enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        //check for the response code
-                        Log.d(TAG, response.body().toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.d(TAG, t.getMessage());
-                    }
-                });
-        //Use case of getArticle
-        apiServiceClient.getArticle(new TokenizedObject<>(account.getIdToken(), new GetArticleRequest("https://www.repubblica.it/politica/2020/04/26/news/coronavirus_riaperture_cabina_regia_governo_regioni-assadas928829/?ref=RHPPTP-BH-I254934416-C12-P2-S1.12-T1", "repubblica.it")))
-                .enqueue(new Callback<GetArticleResponse>() {
-                    @Override
-                    public void onResponse(Call<GetArticleResponse> call, Response<GetArticleResponse> response) {
-                        //check for the response code
-                        Log.d(TAG, response.body().getArticle().toString());
-                        Log.d(TAG, response.body().getWebsite().toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<GetArticleResponse> call, Throwable t) {
-                        Log.d(TAG, t.getMessage());
-                    }
-                });
-        // Use case of submitReport
-        apiServiceClient.submitReport(new TokenizedObject<>(account.getIdToken(), new Report("https://www.repubblica.it/politica/2020/04/26/news/coronavirus_riaperture_cabina_regia_governo_regioni-assadas928829/?ref=RHPPTP-BH-I254934416-C12-P2-S1.12-T1", account.getId(), Report.ReportValue.LEGIT)))
-                .enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        //check for the response code
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.d(TAG, t.getMessage());
-                    }
-                });
+//        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
+//        // Use case of submitReport
+//        apiServiceClient.submitReport(new TokenizedObject<>(account.getIdToken(), new Report("https://www.repubblica.it/politica/2020/04/26/news/coronavirus_riaperture_cabina_regia_governo_regioni-assadas928829/?ref=RHPPTP-BH-I254934416-C12-P2-S1.12-T1", account.getId(), Report.ReportValue.LEGIT)))
+//                .enqueue(new Callback<String>() {
+//                    @Override
+//                    public void onResponse(Call<String> call, Response<String> response) {
+//                        //check for the response code
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<String> call, Throwable t) {
+//                        Log.d(TAG, t.getMessage());
+//                    }
+//                });
     }
 
 

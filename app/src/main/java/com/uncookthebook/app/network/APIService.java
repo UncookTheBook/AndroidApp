@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 public interface APIService {
 
     @POST("/utb/add_user")
-    Call<String> addUser(@Body TokenizedObject<User> request);
+    Call<Void> addUser(@Body TokenizedObject<User> request);
 
     @POST("/utb/get_article")
     Call<GetArticleResponse> getArticle(@Body TokenizedObject<GetArticleRequest> request);

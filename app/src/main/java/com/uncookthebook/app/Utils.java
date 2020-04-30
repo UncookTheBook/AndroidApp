@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.core.util.PatternsCompat;
 
@@ -32,5 +34,10 @@ class Utils {
                 Context.MODE_PRIVATE
         );
         sharedPref.edit().clear().apply();
+    }
+
+    static void setTextViewTo(View view, int id, String text){
+        TextView articleTitle = view.findViewById(id);
+        articleTitle.setText(text);
     }
 }
