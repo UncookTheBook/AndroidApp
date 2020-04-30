@@ -52,7 +52,7 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
     }
 
     protected void closeMenuOnElementClick() {
-        if(nav.isBackdropShown()) {
+        if (nav.isBackdropShown()) {
             nav.closeMenu(view);
         }
     }
@@ -75,11 +75,11 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
         topBar.setTitle(String.format(getString(R.string.welcome), getUserName()));
     }
 
-    private String getUserName(){
+    private String getUserName() {
         return ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount().getGivenName();
     }
 
-    private void setupToolbarButtons(){
+    private void setupToolbarButtons() {
         FragmentManager fragmentManager = Objects.requireNonNull(getFragmentManager());
         Activity activity = Objects.requireNonNull(getActivity());
 
@@ -96,10 +96,11 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
             }
         });
 
+        //TODO: fix the bug for which isVisible() is always false
         leaderboardButton.setOnClickListener(v -> {
-            LeaderboardFragment leaderboardFragment = (LeaderboardFragment) fragmentManager.findFragmentByTag(getString(R.string.leaderboard_tag));
+            CollectionLeadearboardFragment leaderboardFragment = (CollectionLeadearboardFragment) fragmentManager.findFragmentByTag(getString(R.string.leaderboard_tag));
             if (leaderboardFragment == null || !leaderboardFragment.isVisible()) {
-                ((NavigationHost) activity).navigateTo(new LeaderboardFragment(), true, getString(R.string.leaderboard_tag));
+                ((NavigationHost) activity).navigateTo(new CollectionLeadearboardFragment(), true, getString(R.string.leaderboard_tag));
             }
         });
 
