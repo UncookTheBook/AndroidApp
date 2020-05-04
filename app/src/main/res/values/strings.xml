@@ -42,4 +42,7 @@
     <string name="leadearboard_position">Your position:</string>
     <string name="global_leadearboard">Global</string>
     <string name="friends_leadearboard">Friends</string>
+    <string name="user_email_hint">Friend email:</string>
+    <string name="button_add">Add</string>
+    <string name="button_cancel">Cancel</string>
 </resources>

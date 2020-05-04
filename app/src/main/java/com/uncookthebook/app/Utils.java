@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,5 +41,9 @@ class Utils {
     static void setTextViewTo(View view, int id, String text){
         TextView articleTitle = view.findViewById(id);
         articleTitle.setText(text);
+    }
+
+    static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

@@ -1,9 +1,15 @@
 package com.uncookthebook.app;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,8 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.uncookthebook.app.GeneralTopBarFragment;
-import com.uncookthebook.app.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uncookthebook.app.leadearboard.LeadearboardItemRecyclerViewAdapter;
 import com.uncookthebook.app.leadearboard.PersonEntry;
 
@@ -37,6 +43,8 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
 
         recyclerViewSetup(playerPosition);
         setCurrentPositionText(playerPosition);
+        addFriendSetup();
+        friendEditTextSetup();
         return view;
     }
 
@@ -58,8 +66,68 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
         recyclerView.setAdapter(adapter);
     }
 
+    private void addFriendSetup(){
+        FloatingActionButton floatingAddButton = view.findViewById(R.id.fab);
+        floatingAddButton.setOnClickListener(this);
+
+        MaterialButton cancel = view.findViewById(R.id.cancel_button);
+        cancel.setOnClickListener(this);
+
+        MaterialButton add = view.findViewById(R.id.add_button);
+        add.setOnClickListener(this);
+    }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void friendEditTextSetup() {
+        EditText friendEmailInputField = view.findViewById(R.id.emailField);
+        //Since edit text does override onClick and does not call it, I have to specify it manually
+        friendEmailInputField.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP && !v.hasFocus()) {
+                v.performClick();
+            }
+            return false;
+        });
+        friendEmailInputField.setOnClickListener(this);
+        friendEmailInputField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (! Utils.isValidEmail(friendEmailInputField.getText().toString())) {
+                    friendEmailInputField.setError("Invalid email");
+                }
+            }
+        });
+    }
+
+    private void sendFriendMail(String mail){
+        //server call
+    }
+
     @Override
     public void onClick(View v) {
-
+        closeMenuOnElementClick();
+        if(v.getId() == R.id.add_button){
+            EditText friendEmailInputField = view.findViewById(R.id.emailField);
+            String friendEmail = friendEmailInputField.getText().toString();
+            if(Utils.isValidEmail(friendEmailInputField.getText().toString())) {
+                sendFriendMail(friendEmail);
+                Log.d("Friend mail", friendEmail);
+                view.findViewById(R.id.friend_dialog).setVisibility(View.INVISIBLE);
+            }
+        }
+        if(v.getId() == R.id.cancel_button){
+            view.findViewById(R.id.friend_dialog).setVisibility(View.INVISIBLE);
+        }
+        if(v.getId() == R.id.fab){
+            view.findViewById(R.id.friend_dialog).setVisibility(View.VISIBLE);
+        }
     }
 }
