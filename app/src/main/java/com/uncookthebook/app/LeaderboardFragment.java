@@ -11,19 +11,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uncookthebook.app.leadearboard.LeadearboardItemRecyclerViewAdapter;
 import com.uncookthebook.app.leadearboard.PersonEntry;
+import com.uncookthebook.app.models.AddFriendRequest;
+import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.network.APIService;
+import com.uncookthebook.app.network.APIServiceUtils;
 
 import java.util.Locale;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LeaderboardFragment extends GeneralTopBarFragment {
     public static String FRIENDS_LEADERBOARD = "friends_leadearboard";
@@ -108,7 +118,44 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
     }
 
     private void sendFriendMail(String mail){
-        //server call
+        view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+        APIService apiService = APIServiceUtils.getAPIServiceClient();
+        GoogleSignInAccount account = ((GoogleActivity) getActivity()).getGoogleAccount();
+        apiService.addFriend(
+                new TokenizedObject<>(
+                        account.getIdToken(),
+                        new AddFriendRequest(account.getId(), mail)
+                )
+        ).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 201) {
+                    showSuccessfulFriendSend();
+                }else{
+                    showFailedFriendSend();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                showFailedFriendSend();
+            }
+        });
+    }
+
+    private void showFailedFriendSend() {
+        view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
+        Toast.makeText(
+                getContext(), getString(R.string.friend_send_failed), Toast.LENGTH_SHORT
+        ).show();
+    }
+
+
+    private void showSuccessfulFriendSend() {
+        view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
+        Toast.makeText(
+                getContext(), getString(R.string.friend_send_success), Toast.LENGTH_SHORT
+        ).show();
     }
 
     @Override
