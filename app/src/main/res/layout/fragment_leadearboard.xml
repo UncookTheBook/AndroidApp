@@ -6,5 +6,6 @@
 
     <include layout="@layout/include_top_bar"/>
     <include layout="@layout/include_leadearboard"/>
+    <include layout="@layout/include_ask_friend"/>
 
 </FrameLayout>
