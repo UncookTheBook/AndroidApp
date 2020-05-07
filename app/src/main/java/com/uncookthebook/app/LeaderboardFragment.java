@@ -44,6 +44,7 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
     private boolean isFriendsLeadearboard = false;
     private List<LeaderboardUser> leadearboard;
     private GoogleSignInAccount account;
+    private int playerPosition = 0;
 
     @Override
     public View onCreateView(
@@ -57,19 +58,18 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
         account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
 
         retrieveLeadearboard();
-        setCurrentPositionText(2);
         addFriendSetup();
         friendEditTextSetup();
         hideAddFriendButton();
         return view;
     }
 
-    private void setCurrentPositionText(int playerPosition) {
+    private void setCurrentPositionText() {
         TextView currentPositionText = view.findViewById(R.id.currentPosition);
         currentPositionText.setText(String.format(Locale.US, "%d", playerPosition));
     }
 
-    private void recyclerViewSetup(int playerPosition) {
+    private void recyclerViewSetup() {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
@@ -173,8 +173,9 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
             public void onResponse(Call<GetLeaderboardResponse> call, Response<GetLeaderboardResponse> response) {
                 if(response.code() == 200 && response.body() != null){
                     leadearboard = response.body().getLeaderboard();
-                    //TODO add player position
-                    recyclerViewSetup(1);
+                    playerPosition = response.body().getUserPosition();
+                    recyclerViewSetup();
+                    setCurrentPositionText();
                     view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                 }else{
                     showToast(getString(R.string.failed_leadearboard_retrieval));
