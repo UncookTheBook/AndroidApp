@@ -16,8 +16,6 @@ public class User implements Model {
     private final String uid;
     @SerializedName("name")
     private final String name;
-    @SerializedName("surname")
-    private final String surname;
     @SerializedName("email")
     private final String email;
 
@@ -25,13 +23,11 @@ public class User implements Model {
      * Class constructor
      * @param uid the user's id
      * @param name the user's given name
-     * @param surname the user's family name
      * @param email the user's email
      */
-    public User(@NonNull String uid, @NonNull String name, @NonNull String surname, @NonNull String email) {
+    public User(@NonNull String uid, @NonNull String name, @NonNull String email) {
         this.uid = uid;
         this.name = name;
-        this.surname = surname;
         this.email = email;
     }
 }

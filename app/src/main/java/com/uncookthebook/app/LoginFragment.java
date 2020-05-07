@@ -2,7 +2,6 @@ package com.uncookthebook.app;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.DeniedByServerException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.uncookthebook.app.models.TokenizedObject;
@@ -25,14 +23,8 @@ import com.uncookthebook.app.models.User;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +33,7 @@ import retrofit2.Response;
  * Fragment representing the login screen.
  */
 public class LoginFragment extends Fragment {
+    private static final String TAG = "LoginFragment";
     //an int required by google sign in. Can be anything
     private static final int RC_SIGN_IN = 2;
     private View view;
@@ -94,7 +87,7 @@ public class LoginFragment extends Fragment {
 
     private void sendUserToServer(GoogleSignInAccount account, NavigationHost activity)  {
         APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
-        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken(), new User(account.getId(), account.getGivenName(), account.getFamilyName(), account.getEmail())))
+        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken(), new User(account.getId(), account.getGivenName(), account.getEmail())))
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -109,6 +102,7 @@ public class LoginFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        Log.d(TAG, t.getMessage());
                         showFailedLogin();
                     }
                 });

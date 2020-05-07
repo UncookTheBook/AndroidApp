@@ -14,22 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.uncookthebook.app.models.GetArticleRequest;
-import com.uncookthebook.app.models.GetArticleResponse;
-import com.uncookthebook.app.models.GetLeaderboardRequest;
-import com.uncookthebook.app.models.GetLeaderboardResponse;
-import com.uncookthebook.app.models.LeaderboardUser;
-import com.uncookthebook.app.models.Report;
-import com.uncookthebook.app.models.TokenizedObject;
-import com.uncookthebook.app.models.User;
-import com.uncookthebook.app.network.APIService;
-import com.uncookthebook.app.network.APIServiceUtils;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
 
@@ -152,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     @Override
     public void setGoogleAccount(GoogleSignInAccount account) {
         userAccount = account;
-        APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
     }
 
 

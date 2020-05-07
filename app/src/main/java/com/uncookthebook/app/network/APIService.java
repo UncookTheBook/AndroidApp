@@ -5,12 +5,9 @@ import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
 import com.uncookthebook.app.models.GetLeaderboardRequest;
 import com.uncookthebook.app.models.GetLeaderboardResponse;
-import com.uncookthebook.app.models.LeaderboardUser;
 import com.uncookthebook.app.models.Report;
 import com.uncookthebook.app.models.TokenizedObject;
 import com.uncookthebook.app.models.User;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
