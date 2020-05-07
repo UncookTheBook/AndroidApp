@@ -170,8 +170,8 @@ public class ReportArticleFragment extends Fragment {
 
     private void setupUI(Article article){
         setTextViewTo(view, R.id.articleTitle, article.getName());
-        setTextViewTo(view, R.id.textReportLegitNumber, Integer.toString(article.getPositiveReports()));
-        setTextViewTo(view, R.id.textReportFakeNumber, Integer.toString(article.getNegativeReports()));
+        setTextViewTo(view, R.id.textReportLegitNumber, Integer.toString(article.getLegitReports()));
+        setTextViewTo(view, R.id.textReportFakeNumber, Integer.toString(article.getFakeReports()));
     }
 
     private void showFailedArticleDataRetrieval() {

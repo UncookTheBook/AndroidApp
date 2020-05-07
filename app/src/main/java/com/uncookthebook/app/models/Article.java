@@ -16,22 +16,22 @@ public class Article implements Model {
     private final String url;
     @SerializedName("name")
     private final String name;
-    @SerializedName("positive_reports")
-    private final Integer positiveReports;
-    @SerializedName("negative_reports")
-    private final Integer negativeReports;
+    @SerializedName("legit_reports")
+    private final Integer legitReports;
+    @SerializedName("fake_reports")
+    private final Integer fakeReports;
 
     /**
      * Class constructor
      * @param url the article's url
      * @param name the article's name
-     * @param positiveReports the number of positive reports
-     * @param negativeReports the number of negative reports
+     * @param legitReports the number of positive reports
+     * @param fakeReports the number of negative reports
      */
-    public Article(@NonNull String url, @NonNull String name, @NonNull Integer positiveReports, @NonNull Integer negativeReports) {
+    public Article(@NonNull String url, @NonNull String name, @NonNull Integer legitReports, @NonNull Integer fakeReports) {
         this.url = url;
         this.name = name;
-        this.positiveReports = positiveReports;
-        this.negativeReports = negativeReports;
+        this.legitReports = legitReports;
+        this.fakeReports = fakeReports;
     }
 }
