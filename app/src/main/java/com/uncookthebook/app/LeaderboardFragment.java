@@ -22,12 +22,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uncookthebook.app.leadearboard.LeadearboardItemRecyclerViewAdapter;
-import com.uncookthebook.app.leadearboard.PersonEntry;
 import com.uncookthebook.app.models.AddFriendRequest;
+import com.uncookthebook.app.models.GetLeaderboardRequest;
+import com.uncookthebook.app.models.GetLeaderboardResponse;
+import com.uncookthebook.app.models.LeaderboardUser;
 import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -39,6 +42,9 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
     public static String FRIENDS_LEADERBOARD = "friends_leadearboard";
     private View view;
     private boolean isFriendsLeadearboard = false;
+    private List<LeaderboardUser> leadearboard;
+    private GoogleSignInAccount account;
+    private int playerPosition = 0;
 
     @Override
     public View onCreateView(
@@ -49,27 +55,27 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
 
         Bundle bundle = Objects.requireNonNull(getArguments());
         isFriendsLeadearboard = bundle.getBoolean(FRIENDS_LEADERBOARD);
-        int playerPosition = isFriendsLeadearboard ? 2 : 5;
+        account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
 
-        recyclerViewSetup(playerPosition);
-        setCurrentPositionText(playerPosition);
+        retrieveLeadearboard();
         addFriendSetup();
         friendEditTextSetup();
+        hideAddFriendButton();
         return view;
     }
 
-    private void setCurrentPositionText(int playerPosition) {
+    private void setCurrentPositionText() {
         TextView currentPositionText = view.findViewById(R.id.currentPosition);
         currentPositionText.setText(String.format(Locale.US, "%d", playerPosition));
     }
 
-    private void recyclerViewSetup(int playerPosition) {
+    private void recyclerViewSetup() {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         LeadearboardItemRecyclerViewAdapter adapter = new LeadearboardItemRecyclerViewAdapter(
-                PersonEntry.initProductEntryList(isFriendsLeadearboard),
+                leadearboard,
                 playerPosition,
                 ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorAccent)
         );
@@ -120,7 +126,6 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
     private void sendFriendMail(String mail){
         view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
         APIService apiService = APIServiceUtils.getAPIServiceClient();
-        GoogleSignInAccount account = ((GoogleActivity) getActivity()).getGoogleAccount();
         apiService.addFriend(
                 new TokenizedRequest<>(
                         account.getIdToken(),
@@ -130,32 +135,58 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.code() == 201) {
-                    showSuccessfulFriendSend();
+                    showToast(getString(R.string.friend_send_success));
                 }else{
-                    showFailedFriendSend();
+                    showToast(getString(R.string.friend_send_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                showFailedFriendSend();
+                showToast(getString(R.string.friend_send_failed));
             }
         });
     }
 
-    private void showFailedFriendSend() {
+    private void showToast(String message) {
         view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
-        Toast.makeText(
-                getContext(), getString(R.string.friend_send_failed), Toast.LENGTH_SHORT
-        ).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    private void hideAddFriendButton() {
+        if(!isFriendsLeadearboard){
+            view.findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+        }
+    }
 
-    private void showSuccessfulFriendSend() {
-        view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
-        Toast.makeText(
-                getContext(), getString(R.string.friend_send_success), Toast.LENGTH_SHORT
-        ).show();
+    private void retrieveLeadearboard() {
+        view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+        APIService apiService = APIServiceUtils.getAPIServiceClient();
+        GetLeaderboardRequest.LeaderboardType leaderboardType = isFriendsLeadearboard ? GetLeaderboardRequest.LeaderboardType.FRIENDS : GetLeaderboardRequest.LeaderboardType.GLOBAL;
+        apiService.getLeaderboard(
+                new TokenizedRequest<>(
+                        account.getIdToken(),
+                        new GetLeaderboardRequest(leaderboardType)
+                )
+        ).enqueue(new Callback<GetLeaderboardResponse>() {
+            @Override
+            public void onResponse(Call<GetLeaderboardResponse> call, Response<GetLeaderboardResponse> response) {
+                if(response.code() == 200 && response.body() != null){
+                    leadearboard = response.body().getLeaderboard();
+                    playerPosition = response.body().getUserPosition();
+                    recyclerViewSetup();
+                    setCurrentPositionText();
+                    view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
+                }else{
+                    showToast(getString(R.string.failed_leadearboard_retrieval));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetLeaderboardResponse> call, Throwable t) {
+                showToast(getString(R.string.failed_leadearboard_retrieval));
+            }
+        });
     }
 
     @Override

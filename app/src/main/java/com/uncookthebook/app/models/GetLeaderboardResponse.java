@@ -16,11 +16,16 @@ public class GetLeaderboardResponse {
     @SerializedName("leaderboard")
     private final List<LeaderboardUser> leaderboard;
 
+    @SerializedName("user_position")
+    private final int userPosition;
+
     /**
      * Class constructor
      * @param leaderboard the leaderboard
+     * @param userPosition the user Position
      */
-    public GetLeaderboardResponse(List<LeaderboardUser> leaderboard) {
+    public GetLeaderboardResponse(List<LeaderboardUser> leaderboard, int userPosition) {
         this.leaderboard = leaderboard;
+        this.userPosition = userPosition;
     }
 }

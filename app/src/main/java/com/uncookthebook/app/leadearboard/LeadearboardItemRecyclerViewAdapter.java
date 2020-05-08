@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.uncookthebook.app.R;
+import com.uncookthebook.app.models.LeaderboardUser;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,9 +20,9 @@ import java.util.Locale;
 public class LeadearboardItemRecyclerViewAdapter extends RecyclerView.Adapter<LeadearboardItemViewHolder> {
     private int playerPositon;
     private int playerColor;
-    private List<PersonEntry> itemList;
+    private List<LeaderboardUser> itemList;
 
-    public LeadearboardItemRecyclerViewAdapter(List<PersonEntry> itemList, int playerPosition, int playerColor) {
+    public LeadearboardItemRecyclerViewAdapter(List<LeaderboardUser> itemList, int playerPosition, int playerColor) {
         this.itemList = itemList;
         this.playerPositon = playerPosition - 1;
         this.playerColor = playerColor;
@@ -37,9 +38,9 @@ public class LeadearboardItemRecyclerViewAdapter extends RecyclerView.Adapter<Le
     @Override
     public void onBindViewHolder(@NonNull LeadearboardItemViewHolder holder, int position) {
         if (itemList != null && position < itemList.size()) {
-            PersonEntry person = itemList.get(position);
-            holder.personName.setText(person.name);
-            holder.personPoints.setText(String.format(Locale.US, "%d", person.points));
+            LeaderboardUser person = itemList.get(position);
+            holder.personName.setText(person.getName());
+            holder.personPoints.setText(String.format(Locale.US, "%d", person.getScore()));
             holder.personPosition.setText(String.format(Locale.US, "%d", position + 1));
             if(position == playerPositon){
                 holder.materialCardView.setCardBackgroundColor(playerColor);
