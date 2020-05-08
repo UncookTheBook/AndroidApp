@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/friend_dialog"
         android:layout_width="350dp"
-        android:layout_height="150dp"
+        android:layout_height="180dp"
         android:layout_gravity="center"
         android:background="@color/loginPageBackgroundColor"
         android:elevation="20dp"
@@ -27,9 +27,8 @@
             android:hint="@string/user_email_hint"
             app:layout_constraintBottom_toTopOf="@+id/cancel_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0."
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailField"
@@ -46,9 +45,10 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:text="@string/button_cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/add_button"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toTopOf="@id/add_button"
+            tools:layout_editor_absoluteY="131dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
@@ -60,5 +60,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_friend"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

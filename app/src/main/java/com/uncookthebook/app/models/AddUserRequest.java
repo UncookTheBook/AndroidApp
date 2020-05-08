@@ -7,13 +7,11 @@ import lombok.NonNull;
 import lombok.ToString;
 
 /**
- * Models a User.
+ * Models an AddUserRequest.
  */
 @Getter
 @ToString
-public class User implements Model {
-    @SerializedName("uid")
-    private final String uid;
+public class AddUserRequest implements Request {
     @SerializedName("name")
     private final String name;
     @SerializedName("email")
@@ -21,12 +19,10 @@ public class User implements Model {
 
     /**
      * Class constructor
-     * @param uid the user's id
      * @param name the user's given name
      * @param email the user's email
      */
-    public User(@NonNull String uid, @NonNull String name, @NonNull String email) {
-        this.uid = uid;
+    public AddUserRequest(@NonNull String name, @NonNull String email) {
         this.name = name;
         this.email = email;
     }

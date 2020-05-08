@@ -11,7 +11,7 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class Website implements Model {
+public class Website implements Request {
     @SerializedName("name")
     private final String name;
     @SerializedName("legit")
