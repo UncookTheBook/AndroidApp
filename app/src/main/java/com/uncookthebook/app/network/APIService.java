@@ -5,9 +5,9 @@ import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
 import com.uncookthebook.app.models.GetLeaderboardRequest;
 import com.uncookthebook.app.models.GetLeaderboardResponse;
-import com.uncookthebook.app.models.Report;
-import com.uncookthebook.app.models.TokenizedObject;
-import com.uncookthebook.app.models.User;
+import com.uncookthebook.app.models.SubmitReportRequest;
+import com.uncookthebook.app.models.TokenizedRequest;
+import com.uncookthebook.app.models.AddUserRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,17 +20,17 @@ import retrofit2.http.POST;
 public interface APIService {
 
     @POST("/utb/add_user")
-    Call<Void> addUser(@Body TokenizedObject<User> request);
+    Call<Void> addUser(@Body TokenizedRequest<AddUserRequest> request);
 
     @POST("/utb/get_article")
-    Call<GetArticleResponse> getArticle(@Body TokenizedObject<GetArticleRequest> request);
+    Call<GetArticleResponse> getArticle(@Body TokenizedRequest<GetArticleRequest> request);
 
     @POST("/utb/submit_report")
-    Call<String> submitReport(@Body TokenizedObject<Report> request);
+    Call<String> submitReport(@Body TokenizedRequest<SubmitReportRequest> request);
 
     @POST("/utb/add_friend")
-    Call<Void> addFriend(@Body TokenizedObject<AddFriendRequest> request);
+    Call<Void> addFriend(@Body TokenizedRequest<AddFriendRequest> request);
 
     @POST("/utb/get_leaderboard")
-    Call<GetLeaderboardResponse> getLeaderboard(@Body TokenizedObject<GetLeaderboardRequest> request);
+    Call<GetLeaderboardResponse> getLeaderboard(@Body TokenizedRequest<GetLeaderboardRequest> request);
 }

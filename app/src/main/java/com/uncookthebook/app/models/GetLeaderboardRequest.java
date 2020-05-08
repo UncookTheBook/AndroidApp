@@ -10,20 +10,16 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class GetLeaderboardRequest implements Model {
+public class GetLeaderboardRequest implements Request {
     @SerializedName("type")
     private final LeaderboardType leaderboardType;
-    @SerializedName("uid")
-    private final String userId;
 
     /**
      * Class constructor
      * @param leaderboardType the leaderboard type. See {@link LeaderboardType}
-     * @param userId the user id
      */
-    public GetLeaderboardRequest(LeaderboardType leaderboardType, String userId) {
+    public GetLeaderboardRequest(LeaderboardType leaderboardType) {
         this.leaderboardType = leaderboardType;
-        this.userId = userId;
     }
 
     /**

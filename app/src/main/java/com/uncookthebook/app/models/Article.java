@@ -11,7 +11,7 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class Article implements Model {
+public class Article implements Request {
     @SerializedName("url")
     private final String url;
     @SerializedName("name")

@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uncookthebook.app.leadearboard.LeadearboardItemRecyclerViewAdapter;
 import com.uncookthebook.app.leadearboard.PersonEntry;
 import com.uncookthebook.app.models.AddFriendRequest;
-import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
@@ -122,9 +122,9 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
         APIService apiService = APIServiceUtils.getAPIServiceClient();
         GoogleSignInAccount account = ((GoogleActivity) getActivity()).getGoogleAccount();
         apiService.addFriend(
-                new TokenizedObject<>(
+                new TokenizedRequest<>(
                         account.getIdToken(),
-                        new AddFriendRequest(account.getId(), mail)
+                        new AddFriendRequest(mail)
                 )
         ).enqueue(new Callback<Void>() {
             @Override
