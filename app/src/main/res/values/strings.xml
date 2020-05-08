@@ -47,4 +47,6 @@
     <string name="user_email_hint">Friend email:</string>
     <string name="button_add">Add</string>
     <string name="button_cancel">Cancel</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="failed_leadearboard_retrieval">Sorry, we couldn\'t retrieve the leadearboard. Please try again</string>
 </resources>
