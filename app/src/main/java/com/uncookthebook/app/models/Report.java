@@ -3,6 +3,7 @@ package com.uncookthebook.app.models;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -10,30 +11,23 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class Report implements Model {
-    @SerializedName("url")
-    private final String articleUrl;
-    @SerializedName("uid")
+public class Report {
+    @SerializedName("user_id")
     private final String userId;
-    @SerializedName("report")
-    private final ReportValue reportValue;
+    @SerializedName("article_url")
+    private final String articleUrl;
+    @SerializedName("value")
+    private final ReportValue value;
 
     /**
      * Class constructor
-     * @param articleUrl the article url
-     * @param userId the user id
-     * @param reportValue the report value
+     * @param userId the id of the user who submitted the report
+     * @param articleUrl the url of the reported article
+     * @param value the value of the report
      */
-    public Report(String articleUrl, String userId, ReportValue reportValue) {
-        this.articleUrl = articleUrl;
+    public Report(@NonNull String userId, @NonNull String articleUrl, ReportValue value) {
         this.userId = userId;
-        this.reportValue = reportValue;
-    }
-
-    public enum ReportValue {
-        @SerializedName("L")
-        LEGIT,
-        @SerializedName("F")
-        FAKE
+        this.articleUrl = articleUrl;
+        this.value = value;
     }
 }

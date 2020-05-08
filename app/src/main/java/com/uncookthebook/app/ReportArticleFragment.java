@@ -24,7 +24,8 @@ import com.google.android.material.button.MaterialButton;
 import com.uncookthebook.app.models.Article;
 import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
-import com.uncookthebook.app.models.TokenizedObject;
+import com.uncookthebook.app.models.Report;
+import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
@@ -146,7 +147,7 @@ public class ReportArticleFragment extends Fragment {
         view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
         GoogleSignInAccount account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
         APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
-        apiServiceClient.getArticle(new TokenizedObject<>(account.getIdToken(), new GetArticleRequest(url.toString(), url.getHost())))
+        apiServiceClient.getArticle(new TokenizedRequest<>(account.getIdToken(), new GetArticleRequest(url.toString(), url.getHost())))
                 .enqueue(new Callback<GetArticleResponse>() {
                     @Override
                     public void onResponse(Call<GetArticleResponse> call, Response<GetArticleResponse> response) {
@@ -157,6 +158,10 @@ public class ReportArticleFragment extends Fragment {
                             view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                             Article article = response.body().getArticle();
                             setupUI(article);
+                            Report report = response.body().getReport();
+                            if (report != null) {
+                                System.out.println(report.toString());
+                            }
                         }
                     }
 

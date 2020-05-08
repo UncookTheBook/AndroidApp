@@ -11,19 +11,19 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class GetArticleRequest implements Model {
+public class GetArticleRequest implements Request {
     @SerializedName("url")
     private final String url;
     @SerializedName("website_name")
-    private final String website_name;
+    private final String websiteName;
 
     /**
      * Class constructor
      * @param url the article's url
-     * @param website_name the website's name
+     * @param websiteName the website's name
      */
-    public GetArticleRequest(@NonNull String url, @NonNull String website_name) {
+    public GetArticleRequest(@NonNull String url, @NonNull String websiteName) {
         this.url = url;
-        this.website_name = website_name;
+        this.websiteName = websiteName;
     }
 }

@@ -9,7 +9,7 @@ import lombok.Getter;
  * @param <T> the object Type
  */
 @Getter
-public class TokenizedObject<T extends Model> {
+public class TokenizedRequest<T extends Request> {
     @SerializedName("token")
     private String token;
     @SerializedName("object")
@@ -19,7 +19,7 @@ public class TokenizedObject<T extends Model> {
      * @param token the verification token
      * @param object the actual body object
      */
-    public TokenizedObject(String token, T object) {
+    public TokenizedRequest(String token, T object) {
         this.token = token;
         this.object = object;
     }

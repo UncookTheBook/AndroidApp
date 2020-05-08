@@ -18,8 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.uncookthebook.app.models.TokenizedObject;
-import com.uncookthebook.app.models.User;
+import com.uncookthebook.app.models.TokenizedRequest;
+import com.uncookthebook.app.models.AddUserRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment {
 
     private void sendUserToServer(GoogleSignInAccount account, NavigationHost activity)  {
         APIService apiServiceClient = APIServiceUtils.getAPIServiceClient();
-        apiServiceClient.addUser(new TokenizedObject<>(account.getIdToken(), new User(account.getId(), account.getGivenName(), account.getEmail())))
+        apiServiceClient.addUser(new TokenizedRequest<>(account.getIdToken(), new AddUserRequest(account.getGivenName(), account.getEmail())))
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
