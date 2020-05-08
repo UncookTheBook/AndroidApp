@@ -41,6 +41,10 @@ class ZoomOnClick {
         clicked.set(!clicked.get());
     }
 
+    boolean hasViewBeenClicked(View target){
+        return Objects.requireNonNull(buttonToStatus.get(target)).get();
+    }
+
     private void reduceSize(View v1, Context context){
         AnimatorSet decreaser = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.reduce_size);
         decreaser.setTarget(v1);

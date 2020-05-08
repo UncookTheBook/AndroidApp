@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -17,9 +18,11 @@ public class Article implements Request {
     @SerializedName("name")
     private final String name;
     @SerializedName("legit_reports")
-    private final Integer legitReports;
+    @Setter //we need the setter when the user has already submitted a report
+    private Integer legitReports;
     @SerializedName("fake_reports")
-    private final Integer fakeReports;
+    @Setter //we need the setter when the user has already submitted a report
+    private Integer fakeReports;
 
     /**
      * Class constructor

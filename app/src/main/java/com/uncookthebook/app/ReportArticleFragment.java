@@ -25,6 +25,8 @@ import com.uncookthebook.app.models.Article;
 import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
 import com.uncookthebook.app.models.Report;
+import com.uncookthebook.app.models.ReportValue;
+import com.uncookthebook.app.models.SubmitReportRequest;
 import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
@@ -56,8 +58,6 @@ public class ReportArticleFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
         view = inflater.inflate(R.layout.fragment_report_article, container, false);
-        voteButtonSetup(R.id.button_legit);
-        voteButtonSetup(R.id.button_fake);
         homeButtonSetup();
         return view;
     }
@@ -73,8 +73,40 @@ public class ReportArticleFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         APIServiceUtils.getOkHttpClient().dispatcher().cancelAll();
+        sendSubmitReport();
+        super.onDestroy();
+    }
+
+    private void sendSubmitReport(){
+        //check if one of the two buttons has been clicked
+        boolean legitClicked = animationHandler.hasViewBeenClicked(view.findViewById(R.id.button_legit));
+        boolean fakeCliked = animationHandler.hasViewBeenClicked(view.findViewById(R.id.button_fake));
+
+        if(legitClicked || fakeCliked){
+            ReportValue reportValue = legitClicked ? ReportValue.LEGIT : ReportValue.FAKE;
+            sendReportValue(reportValue);
+        }
+    }
+
+    private void sendReportValue(ReportValue reportValue){
+        APIService apiService = APIServiceUtils.getAPIServiceClient();
+        GoogleSignInAccount account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
+        apiService.submitReport(new TokenizedRequest<>(account.getIdToken(), new SubmitReportRequest(url.toString(), reportValue))).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == 201){
+                    Log.d(TAG, "Submit report successful");
+                }else{
+                    Log.w(TAG, "Submit report failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.w(TAG, "Submit report failed");
+            }
+        });
     }
 
     @SneakyThrows
@@ -91,14 +123,6 @@ public class ReportArticleFragment extends Fragment {
             this.url = new URL(urlString);
             clearSharedPrefs(getContext());
         }
-    }
-
-    private void voteButtonSetup(int id){
-        MaterialButton button = view.findViewById(id);
-        animationHandler.addView(button);
-        button.setOnClickListener(v -> {
-            animationHandler.handleSize(v, getContext());
-        });
     }
 
     private void homeButtonSetup(){
@@ -157,11 +181,8 @@ public class ReportArticleFragment extends Fragment {
                         }else{
                             view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                             Article article = response.body().getArticle();
-                            setupUI(article);
                             Report report = response.body().getReport();
-                            if (report != null) {
-                                System.out.println(report.toString());
-                            }
+                            setupUI(article, report);
                         }
                     }
 
@@ -173,10 +194,53 @@ public class ReportArticleFragment extends Fragment {
                 });
     }
 
-    private void setupUI(Article article){
+    private void setupUI(Article article, Report report){
         setTextViewTo(view, R.id.articleTitle, article.getName());
-        setTextViewTo(view, R.id.textReportLegitNumber, Integer.toString(article.getLegitReports()));
-        setTextViewTo(view, R.id.textReportFakeNumber, Integer.toString(article.getFakeReports()));
+
+        setupButtons(R.id.button_legit, article);
+        setupButtons(R.id.button_fake, article);
+
+        if(report != null){
+           if(report.getValue() == ReportValue.LEGIT){
+               MaterialButton legit = view.findViewById(R.id.button_legit);
+               animationHandler.handleSize(legit, getContext());
+               //we decrease by one the number of legit report (will be increased by setupButtons)
+               article.setLegitReports(article.getLegitReports() - 1);
+               updateNumbers(article, legit);
+           }else{
+               MaterialButton fake = view.findViewById(R.id.button_fake);
+               animationHandler.handleSize(fake, getContext());
+               article.setFakeReports(article.getFakeReports() - 1);
+               updateNumbers(article, fake);
+           }
+        }else {
+            //we pass one of the two button (which won't be set to clicked) to put the initial values
+            updateNumbers(article, view.findViewById(R.id.button_fake));
+        }
+    }
+
+    private void setupButtons(int id, Article article){
+        MaterialButton button = view.findViewById(id);
+        animationHandler.addView(button);
+        button.setOnClickListener(v -> {
+            animationHandler.handleSize(v, getContext());
+            updateNumbers(article, v);
+        });
+    }
+
+    private void updateNumbers(Article article, View caller) {
+        boolean clicked = animationHandler.hasViewBeenClicked(caller);
+        int legitReport = article.getLegitReports();
+        int fakeReport = article.getFakeReports();
+        if(clicked){
+            if(caller.equals(view.findViewById(R.id.button_legit))){
+                legitReport += 1;
+            }else{
+                fakeReport += 1;
+            }
+        }
+        setTextViewTo(view, R.id.textReportLegitNumber, Integer.toString(legitReport));
+        setTextViewTo(view, R.id.textReportFakeNumber, Integer.toString(fakeReport));
     }
 
     private void showFailedArticleDataRetrieval() {
