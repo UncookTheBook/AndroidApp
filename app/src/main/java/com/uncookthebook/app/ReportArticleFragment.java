@@ -28,6 +28,7 @@ import com.uncookthebook.app.models.Report;
 import com.uncookthebook.app.models.ReportValue;
 import com.uncookthebook.app.models.SubmitReportRequest;
 import com.uncookthebook.app.models.TokenizedRequest;
+import com.uncookthebook.app.models.Website;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
@@ -182,7 +183,8 @@ public class ReportArticleFragment extends Fragment {
                             view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                             Article article = response.body().getArticle();
                             Report report = response.body().getReport();
-                            setupUI(article, report);
+                            Website website = response.body().getWebsite();
+                            setupUI(article, website, report);
                         }
                     }
 
@@ -194,8 +196,9 @@ public class ReportArticleFragment extends Fragment {
                 });
     }
 
-    private void setupUI(Article article, Report report){
+    private void setupUI(Article article, Website website, Report report){
         setTextViewTo(view, R.id.articleTitle, article.getName());
+        setTextViewTo(view, R.id.rating, website.getLegitPercentage() + "%");
 
         setupButtons(R.id.button_legit, article);
         setupButtons(R.id.button_fake, article);
