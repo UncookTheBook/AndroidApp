@@ -64,6 +64,8 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
     @Override
     public void onStart() {
         super.onStart();
+        // we do it here so that we are sure the google account has been set
+        ((ReportSender) Objects.requireNonNull(getActivity())).submitReport();
         skipIfNeeded();
     }
 
@@ -78,7 +80,7 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
             editor.remove(getString(R.string.skip_key));
             editor.apply();
             ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(
-                    new ReportArticleFragment(), true, getString(R.string.report_article_tag)
+                    new ReportArticleFragment(), false, getString(R.string.report_article_tag)
             );
         }
     }

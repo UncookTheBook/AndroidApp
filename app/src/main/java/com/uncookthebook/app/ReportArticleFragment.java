@@ -1,5 +1,6 @@
 package com.uncookthebook.app;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -79,35 +80,21 @@ public class ReportArticleFragment extends Fragment {
         super.onDestroy();
     }
 
+    @SuppressLint("ApplySharedPref")
     private void sendSubmitReport(){
         //check if one of the two buttons has been clicked
         boolean legitClicked = animationHandler.hasViewBeenClicked(view.findViewById(R.id.button_legit));
         boolean fakeCliked = animationHandler.hasViewBeenClicked(view.findViewById(R.id.button_fake));
 
         if(legitClicked || fakeCliked){
-            ReportValue reportValue = legitClicked ? ReportValue.LEGIT : ReportValue.FAKE;
-            sendReportValue(reportValue);
+            SharedPreferences sharedPreferences = Objects.requireNonNull(getContext())
+                    .getSharedPreferences(getString(R.string.send_report), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(getString(R.string.legit_key), legitClicked);
+            editor.putString(getString(R.string.url_key), url.toString());
+            editor.commit();
+            ((ReportSender) Objects.requireNonNull(getActivity())).submitReport();
         }
-    }
-
-    private void sendReportValue(ReportValue reportValue){
-        APIService apiService = APIServiceUtils.getAPIServiceClient();
-        GoogleSignInAccount account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
-        apiService.submitReport(new TokenizedRequest<>(account.getIdToken(), new SubmitReportRequest(url.toString(), reportValue))).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 201){
-                    Log.d(TAG, "Submit report successful");
-                }else{
-                    Log.w(TAG, "Submit report failed");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.w(TAG, "Submit report failed");
-            }
-        });
     }
 
     @SneakyThrows
