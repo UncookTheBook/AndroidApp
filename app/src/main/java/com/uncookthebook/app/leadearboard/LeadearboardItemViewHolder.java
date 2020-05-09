@@ -10,14 +10,14 @@ import com.google.android.material.card.MaterialCardView;
 import com.uncookthebook.app.R;
 
 
-public class LeadearboardItemViewHolder extends RecyclerView.ViewHolder {
+class LeadearboardItemViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView personName;
-    public TextView personPoints;
-    public TextView personPosition;
-    public MaterialCardView materialCardView;
+    TextView personName;
+    TextView personPoints;
+    TextView personPosition;
+    MaterialCardView materialCardView;
 
-    public LeadearboardItemViewHolder(@NonNull View itemView) {
+    LeadearboardItemViewHolder(@NonNull View itemView) {
         super(itemView);
         personName = itemView.findViewById(R.id.person_name);
         personPoints = itemView.findViewById(R.id.person_points);
