@@ -30,6 +30,7 @@ import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.network.APIService;
 import com.uncookthebook.app.network.APIServiceUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
     public static String FRIENDS_LEADERBOARD = "friends_leadearboard";
     private View view;
     private boolean isFriendsLeadearboard = false;
-    private List<LeaderboardUser> leadearboard;
+    private List<LeaderboardUser> leadearboard = new ArrayList<>();
     private GoogleSignInAccount account;
     private int playerPosition = 0;
 
@@ -57,6 +58,7 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
         isFriendsLeadearboard = bundle.getBoolean(FRIENDS_LEADERBOARD);
         account = ((GoogleActivity) Objects.requireNonNull(getActivity())).getGoogleAccount();
 
+        recyclerViewSetup();
         retrieveLeadearboard();
         addFriendSetup();
         friendEditTextSetup();
@@ -75,8 +77,8 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
         //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         LeadearboardItemRecyclerViewAdapter adapter = new LeadearboardItemRecyclerViewAdapter(
-                leadearboard,
-                playerPosition,
+                new ArrayList<>(),
+                0,
                 ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorAccent)
         );
         recyclerView.setAdapter(adapter);
@@ -174,7 +176,14 @@ public class LeaderboardFragment extends GeneralTopBarFragment {
                 if(response.code() == 200 && response.body() != null){
                     leadearboard = response.body().getLeaderboard();
                     playerPosition = response.body().getUserPosition();
-                    recyclerViewSetup();
+                    //we update the adapter with the updated data
+                    RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+                    LeadearboardItemRecyclerViewAdapter adapter = new LeadearboardItemRecyclerViewAdapter(
+                            leadearboard,
+                            playerPosition,
+                            ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorAccent)
+                    );
+                    recyclerView.setAdapter(adapter);
                     setCurrentPositionText();
                     view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
                 }else{
