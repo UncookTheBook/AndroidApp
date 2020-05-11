@@ -2,11 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#673AB7</color>
     <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorAccent">#E040FB</color>
+    <color name="colorAccent">#536DFE</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
     <color name="loadingPageBackgroundColor">#673AB7</color>
-    <color name="loginPageBackgroundColor">#303030</color>
+    <color name="loginPageBackgroundColor">#673AB7</color>
     <color name="activitiesBackgroundColor">@color/loginPageBackgroundColor</color>
     <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>

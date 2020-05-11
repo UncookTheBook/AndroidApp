@@ -11,11 +11,11 @@
         style="@style/Widget.AppTheme.Backdrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:paddingTop="70dp"
+        android:paddingRight="20dp"
         tools:ignore="RtlHardcoded">
 
         <include layout="@layout/include_toolbar_backdrop" />
@@ -33,6 +33,7 @@
             style="@style/Widget.AppTheme.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
             android:paddingStart="12dp"
             android:paddingLeft="12dp"
             android:paddingEnd="12dp"

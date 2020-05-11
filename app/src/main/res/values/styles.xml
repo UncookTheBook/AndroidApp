@@ -61,9 +61,12 @@
     </style>
 
     <style name="TextAppearance.AppTheme.Title" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="MontserratTextAppearance">
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
     <style name="Widget.AppTheme.Backdrop" parent="">
