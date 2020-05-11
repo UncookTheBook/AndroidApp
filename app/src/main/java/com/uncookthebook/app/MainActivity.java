@@ -1,5 +1,6 @@
 package com.uncookthebook.app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
+import static com.uncookthebook.app.Utils.setReportToSharedPrefs;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity, ReportSender {
 
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     }
 
 
+    @SuppressLint("ApplySharedPref")
     public void submitReport(){
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.send_report), MODE_PRIVATE);
         String url = sharedPreferences.getString(getString(R.string.url_key), null);
@@ -158,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
             final boolean legit = sharedPreferences.getBoolean(getString(R.string.legit_key), false);
             final ReportValue reportValue = legit ? ReportValue.LEGIT : ReportValue.FAKE;
             final APIService apiService = APIServiceUtils.getAPIServiceClient();
+            sharedPreferences.edit().clear().commit();
             //it's on a thread so that it works even if the app is closed
             new Thread(() -> apiService.submitReport(
                     new TokenizedRequest<>(
@@ -169,15 +173,16 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if(response.code() == 201){
                                 Log.d(TAG, "Submit report successful");
-                                sharedPreferences.edit().clear().apply();
                             }else{
                                 Log.w(TAG, "Submit report failed");
+                                setReportToSharedPrefs(legit, url, getApplicationContext());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.w(TAG, "Submit report failed");
+                            setReportToSharedPrefs(legit, url, getApplicationContext());
                         }
                     }
                 )

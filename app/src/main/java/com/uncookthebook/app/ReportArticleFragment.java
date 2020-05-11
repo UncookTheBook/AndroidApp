@@ -27,7 +27,6 @@ import com.uncookthebook.app.models.GetArticleRequest;
 import com.uncookthebook.app.models.GetArticleResponse;
 import com.uncookthebook.app.models.Report;
 import com.uncookthebook.app.models.ReportValue;
-import com.uncookthebook.app.models.SubmitReportRequest;
 import com.uncookthebook.app.models.TokenizedRequest;
 import com.uncookthebook.app.models.Website;
 import com.uncookthebook.app.network.APIService;
@@ -87,12 +86,7 @@ public class ReportArticleFragment extends Fragment {
         boolean fakeCliked = animationHandler.hasViewBeenClicked(view.findViewById(R.id.button_fake));
 
         if(legitClicked || fakeCliked){
-            SharedPreferences sharedPreferences = Objects.requireNonNull(getContext())
-                    .getSharedPreferences(getString(R.string.send_report), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.legit_key), legitClicked);
-            editor.putString(getString(R.string.url_key), url.toString());
-            editor.commit();
+            setReportToSharedPrefs(legitClicked, url.toString(), Objects.requireNonNull(getContext()));
             ((ReportSender) Objects.requireNonNull(getActivity())).submitReport();
         }
     }
