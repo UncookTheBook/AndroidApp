@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.core.util.PatternsCompat;
 
+import java.net.URL;
+import java.util.Objects;
+
 class Utils {
 
     static boolean isURL(String url){
@@ -45,5 +48,15 @@ class Utils {
 
     static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+
+    @SuppressLint("ApplySharedPref")
+    static void setReportToSharedPrefs(boolean legitClicked, String url, Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.send_report), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(context.getString(R.string.legit_key), legitClicked);
+        editor.putString(context.getString(R.string.url_key), url);
+        editor.commit();
     }
 }
