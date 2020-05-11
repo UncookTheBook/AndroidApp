@@ -7,71 +7,63 @@
     android:background="@color/loginPageBackgroundColor"
     tools:context="com.uncookthebook.app.LoginFragment">
 
-    <include layout="@layout/include_loading_spinner"/>
+    <include layout="@layout/include_loading_spinner" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="156dp"
         android:layout_height="156dp"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="142dp"
         android:contentDescription="@string/logo_accessibility"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024"
         app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView2"
+        style="@style/Widget.AppTheme.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="133dp"
+        android:fontFamily="@font/playfair_display_bold"
         android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppTheme.Title"
-        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.01999998" />
 
     <TextView
         android:id="@+id/textInformation"
         style="@style/Widget.AppTheme.TextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/login_explanation"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/login_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_button"
-        style="@style/Widget.AppTheme.Button.IconOnly"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="165dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginBottom="24dp"
-        app:icon="@drawable/ic_exit_to_app_black_24dp"
-        app:iconSize="48dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.AppTheme.Button.Circle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.04000002" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_button"
+        android:layout_width="157dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInformation"
+        app:layout_constraintVertical_bias="0.3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

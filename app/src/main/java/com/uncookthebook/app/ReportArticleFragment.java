@@ -73,10 +73,10 @@ public class ReportArticleFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         APIServiceUtils.getOkHttpClient().dispatcher().cancelAll();
         sendSubmitReport();
-        super.onDestroy();
+        super.onStop();
     }
 
     @SuppressLint("ApplySharedPref")
@@ -179,7 +179,13 @@ public class ReportArticleFragment extends Fragment {
 
     private void setupUI(Article article, Website website, Report report){
         setTextViewTo(view, R.id.articleTitle, article.getName());
-        setTextViewTo(view, R.id.rating, website.getLegitPercentage() + "%");
+
+        double websitePercentage = website.getLegitPercentage();
+        TextView websitePercentageTextView = Objects.requireNonNull(getActivity()).findViewById(R.id.rating);
+        if(websitePercentage < 0.60) {
+            websitePercentageTextView.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        }
+        websitePercentageTextView.setText(getString(R.string.website_outro, websitePercentage * 100 + "%"));
 
         setupButtons(R.id.button_legit, article);
         setupButtons(R.id.button_fake, article);

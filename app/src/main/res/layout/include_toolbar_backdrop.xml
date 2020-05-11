@@ -7,10 +7,11 @@
         style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/home_label"
         android:layout_gravity="left"
         android:drawableLeft="@drawable/ic_home_black_24dp"
         android:drawableTint="@color/toolbarIconColor"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/home_label"
         tools:ignore="RtlHardcoded" />
 
     <View
@@ -25,10 +26,11 @@
         style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/leaderboard_label"
         android:layout_gravity="left"
         android:drawableLeft="@drawable/ic_leaderboard"
         android:drawableTint="@color/toolbarIconColor"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/leaderboard_label"
         tools:ignore="RtlHardcoded" />
 
     <View
@@ -43,10 +45,11 @@
         style="@style/Widget.AppTheme.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
         android:drawableTint="@color/toolbarIconColor"
+        android:fontFamily="@font/montserrat"
         android:text="@string/logout_label"
-        android:layout_gravity="left"
         tools:ignore="RtlHardcoded" />
 
 </merge>

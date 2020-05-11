@@ -11,12 +11,12 @@
         android:layout_weight="1" />
 
     <com.google.android.material.tabs.TabLayout
-        app:tabBackground="@color/colorAccent"
-        app:tabIndicatorGravity="top"
-        app:tabIndicatorColor="@color/textColorPrimary"
-        app:tabTextColor="@color/textColorPrimary"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:tabBackground="@color/colorPrimaryDark"
+        app:tabIndicatorColor="@color/textColorPrimary"
+        app:tabIndicatorGravity="top"
+        app:tabTextColor="@color/textColorPrimary" />
 
 </LinearLayout>

@@ -9,32 +9,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
-        android:soundEffectsEnabled="false"
         android:background="@color/activitiesBackgroundColor"
+        android:soundEffectsEnabled="false"
         app:elevation="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.AppTheme.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:contentDescription="@string/logo_accessibility"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.16000003" />
+            app:layout_constraintVertical_bias="0.086"
+            app:srcCompat="@drawable/logo" />
 
         <TextView
             android:id="@+id/textView"
             style="@style/Widget.AppTheme.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:text="@string/paste_label"
-            android:layout_marginBottom="8dp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -58,7 +60,9 @@
                 android:id="@+id/textEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/playfair_display"
                 android:inputType="text"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 

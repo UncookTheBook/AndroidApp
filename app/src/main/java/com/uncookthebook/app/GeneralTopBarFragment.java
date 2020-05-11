@@ -66,6 +66,7 @@ public abstract class GeneralTopBarFragment extends Fragment implements View.OnC
         Context context = getContext();
         if (context != null) {
             toolbar.setNavigationOnClickListener(nav);
+            toolbar.setTitleTextAppearance(context, R.style.MontserratTextAppearance);
         }
         setupToolbarButtons();
     }
