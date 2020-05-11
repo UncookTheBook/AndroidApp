@@ -2,6 +2,8 @@ package com.uncookthebook.app.network;
 
 import android.annotation.SuppressLint;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -76,7 +78,10 @@ public class APIServiceUtils {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) -> true);
-            return builder.build();
+            return builder
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
+                    .build();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

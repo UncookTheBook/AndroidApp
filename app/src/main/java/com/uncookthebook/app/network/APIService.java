@@ -26,7 +26,7 @@ public interface APIService {
     Call<GetArticleResponse> getArticle(@Body TokenizedRequest<GetArticleRequest> request);
 
     @POST("/utb/submit_report")
-    Call<String> submitReport(@Body TokenizedRequest<SubmitReportRequest> request);
+    Call<Void> submitReport(@Body TokenizedRequest<SubmitReportRequest> request);
 
     @POST("/utb/add_friend")
     Call<Void> addFriend(@Body TokenizedRequest<AddFriendRequest> request);

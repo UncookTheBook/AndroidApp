@@ -1,6 +1,7 @@
 package com.uncookthebook.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,10 +15,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.uncookthebook.app.models.ReportValue;
+import com.uncookthebook.app.models.SubmitReportRequest;
+import com.uncookthebook.app.models.TokenizedRequest;
+import com.uncookthebook.app.network.APIService;
+import com.uncookthebook.app.network.APIServiceUtils;
+
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.uncookthebook.app.Utils.isURL;
 
-public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity {
+public class MainActivity extends AppCompatActivity implements NavigationHost, GoogleActivity, ReportSender {
 
     private static final String TAG = "MainActivity";
 
@@ -139,4 +151,39 @@ public class MainActivity extends AppCompatActivity implements NavigationHost, G
     }
 
 
+    public void submitReport(){
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.send_report), MODE_PRIVATE);
+        String url = sharedPreferences.getString(getString(R.string.url_key), null);
+        if(url != null) {
+            final boolean legit = sharedPreferences.getBoolean(getString(R.string.legit_key), false);
+            final ReportValue reportValue = legit ? ReportValue.LEGIT : ReportValue.FAKE;
+            final APIService apiService = APIServiceUtils.getAPIServiceClient();
+            //it's on a thread so that it works even if the app is closed
+            new Thread(() -> apiService.submitReport(
+                    new TokenizedRequest<>(
+                            userAccount.getIdToken(),
+                            new SubmitReportRequest(url, reportValue)
+                    )
+            ).enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if(response.code() == 201){
+                                Log.d(TAG, "Submit report successful");
+                                sharedPreferences.edit().clear().apply();
+                            }else{
+                                Log.w(TAG, "Submit report failed");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.w(TAG, "Submit report failed");
+                        }
+                    }
+                )
+            ).start();
+
+        }
+
+    }
 }

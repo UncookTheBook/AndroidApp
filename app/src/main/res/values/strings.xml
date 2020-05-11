@@ -49,4 +49,6 @@
     <string name="button_cancel">Cancel</string>
     <string name="add_friend">Add Friend</string>
     <string name="failed_leadearboard_retrieval">Sorry, we couldn\'t retrieve the leadearboard. Please try again</string>
+    <string name="send_report">send_report</string>
+    <string name="legit_key">shared_legit</string>
 </resources>
