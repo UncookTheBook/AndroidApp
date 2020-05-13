@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Uncook the book</string>
     <string name="leaderboard_label">Classifica</string>
-    <string name="logout_label">Esci</string>
+    <string name="logout_label">Disconnettiti</string>
     <string name="home_label">Home</string>
     <string name="logo_accessibility">Il logo dell\'applicazione</string>
     <string name="login_explanation">
