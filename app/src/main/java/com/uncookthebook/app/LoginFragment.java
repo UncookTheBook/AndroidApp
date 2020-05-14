@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.code() == 201) {
+                        if(response.code() == 201 || response.code() == 200) {
                             activity.navigateTo(
                                     new PasteArticleFragment(), false, getString(R.string.paste_article_tag)
                             );

@@ -3,7 +3,9 @@ package com.uncookthebook.app;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +31,7 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
         layoutSetup(view);
         editTextSetup(view);
         view.findViewById(R.id.search_button).setOnClickListener(this);
+        view.findViewById(R.id.open_browser).setOnClickListener(this);
         return view;
     }
 
@@ -99,6 +102,13 @@ public class PasteArticleFragment extends GeneralTopBarFragment {
                     true,
                     getString(R.string.report_article_tag)
             );
+        }
+        if(v.getId() == R.id.open_browser){
+            //an url is required. DuckDuckGo is too overkill. Empty url do not work
+            String url = "https://news.google.com";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         }
     }
 
