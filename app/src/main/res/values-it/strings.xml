@@ -5,8 +5,7 @@
     <string name="home_label">Home</string>
     <string name="logo_accessibility">Il logo dell\'applicazione</string>
     <string name="login_explanation">
-        Al fine di garantire che i nostri utenti non siano robots,
-        ti richiediamo di fare l\'accesso con Google.
+        Fai l\'accesso con Google per farci vedere che non sei un robot.
     </string>
     <string name="server_id">
         234949874727-7pbe1gebujhcicmo1c0i35o948fe7oqa.apps.googleusercontent.com
@@ -15,7 +14,7 @@
     <string name="friend_send_failed">Ci dispiace, non siamo riusciti ad aggiungere il tuo amico. Riprova</string>
     <string name="friend_send_success">Fatto. Lo vedrai la prossima volta che aggiorni la schermata</string>
     <string name="article_data_retrieval_failed">Ci dispiace, non siamo riusciti ad avere i dati su questo articolo. Riprova</string>
-    <string name="welcome">Benvenuto,  %1$s</string>
+    <string name="welcome">Ciao,  %1$s</string>
     <string name="link_hint">Link:</string>
     <string name="paste_label">Incolla qui il link dell\'articolo</string>
     <string name="info_accept">Got it</string>
